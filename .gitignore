@@ -1,0 +1,24 @@
+*.class
+*.swp
+*.log
+
+# eclipse files #
+.metadata/
+.settings/
+.classpath
+.project
+bin/
+Servers/
+
+
+# maven files #
+target/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+
+# spec for this project
+jadeutils-base/src/test/resources/tag/*.jpg
