@@ -13,6 +13,7 @@
 		<module>jadeutils-base</module>
 		<module>jadeutils-cache</module>
 		<module>jadeutils-dao</module>
+		<module>jadeutils-mongo</module>
 		<module>jadeutils-web</module>
 		<module>jadeutils-sandtable</module>
 		<module>jadeutils-cdn</module>
@@ -223,6 +224,11 @@
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
 				<artifactId>jadeutils-dao</artifactId>
+				<version>${jadeutils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-mongo</artifactId>
 				<version>${jadeutils.version}</version>
 			</dependency>
 			<dependency>
