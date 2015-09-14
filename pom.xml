@@ -5,7 +5,7 @@
 
 	<groupId>net.jade-dungeon</groupId>
 	<artifactId>jadeutils-parent</artifactId>
-	<version>0.1.4</version>
+	<version>0.1.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>jade utils parent</name>
 
@@ -13,6 +13,7 @@
 		<module>jadeutils-base</module>
 		<module>jadeutils-cache</module>
 		<module>jadeutils-dao</module>
+		<module>jadeutils-mongo</module>
 		<module>jadeutils-web</module>
 		<module>jadeutils-sandtable</module>
 		<module>jadeutils-cdn</module>
@@ -20,7 +21,7 @@
 
 	<properties>
 		<!-- mudule version -->
-		<jadeutils.version>0.1.4</jadeutils.version>
+		<jadeutils.version>0.1.5-SNAPSHOT</jadeutils.version>
 		<charset.encoding>UTF-8</charset.encoding>
 		<java.version>1.8</java.version>
 		<!-- 3rd libs -->
@@ -223,6 +224,11 @@
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
 				<artifactId>jadeutils-dao</artifactId>
+				<version>${jadeutils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-mongo</artifactId>
 				<version>${jadeutils.version}</version>
 			</dependency>
 			<dependency>

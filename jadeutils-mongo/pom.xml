@@ -9,8 +9,8 @@
 		<version>0.1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jadeutils-dao</artifactId>
-	<name>Jade java utils dao</name>
+	<artifactId>jadeutils-mongo</artifactId>
+	<name>Jade java utils mongo</name>
 
 	<dependencies>
 		<dependency>
