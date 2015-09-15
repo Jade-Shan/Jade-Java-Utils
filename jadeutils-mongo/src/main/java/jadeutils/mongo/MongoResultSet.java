@@ -2,6 +2,9 @@ package jadeutils.mongo;
 
 import jadeutils.mongo.impl.MongoUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mongodb.DBCursor;
 
 public class MongoResultSet<T extends MongoModel> {
@@ -36,6 +39,14 @@ public class MongoResultSet<T extends MongoModel> {
 			cursor.close();
 		}
 		return obj;
+	}
+	
+	public List<T> toList() throws InstantiationException, IllegalAccessException {
+		List<T> list = new ArrayList<T>();
+		while(this.hasNext()){
+			list.add(this.next());
+		}
+		return list;
 	}
 
 }
