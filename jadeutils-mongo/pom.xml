@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadeutils-parent</artifactId>
-		<version>0.1.7</version>
+		<version>0.1.8</version>
 	</parent>
 
 	<artifactId>jadeutils-mongo</artifactId>
@@ -23,12 +23,8 @@
 		</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-jcl</artifactId>
+				<artifactId>slf4j-api</artifactId>
 			</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
