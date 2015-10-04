@@ -206,32 +206,47 @@ public class MongoUtil<T extends MongoModel> {
 	 * 
 	 * @param condition
 	 * @return
-	 * @throws IllegalAccessException 
-	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
-	public static BasicDBObject parseCondition(Condition condition) throws IllegalArgumentException, IllegalAccessException {
+	public static BasicDBObject parseCondition(Condition condition)
+			throws IllegalArgumentException, IllegalAccessException {
 		BasicDBObject result = null;
-		if (null != condition && null != condition.getKey() && null != condition.getValue()) {
+		if (null != condition && null != condition.getKey()
+				&& null != condition.getValue()) {
 			Object value = parseConditionValue(condition.getValue());
 			if (null != value) {
 				result = new BasicDBObject(condition.getKey(), value);
+			} else if (null != condition.getLink()
+					&& null != condition.getLink().getCondition()) //
+			{
+				Condition nextCondition = condition.getLink().getCondition();
+				result = parseCondition(nextCondition);
+			}
+			if(null!=result){
 				addLink(result, condition);
 			}
 		}
 		return result;
 	}
 
-	private static void addLink(BasicDBObject result, Condition condition) throws IllegalArgumentException, IllegalAccessException {
+	private static void addLink(BasicDBObject result, Condition condition)
+			throws IllegalArgumentException, IllegalAccessException {
 		Condition.Link link = condition.getLink();
 		if (null != link && null != link.getCondition()) {
+			Condition nextCondition = link.getCondition();
 			if (Condition.LinkType.AND.equals(link.getType())) {
-				result.append(link.getCondition().getKey(),
-						parseConditionValue(link.getCondition().getValue()));
+				result.append(nextCondition.getKey(),
+						parseConditionValue(nextCondition.getValue()));
+			}
+			if(null != nextCondition.getLink() && null != nextCondition.getLink().getCondition()) {
+				addLink(result, nextCondition);
 			}
 		}
 	}
 
-	private static Object parseConditionValue(Object value) throws IllegalArgumentException, IllegalAccessException {
+	private static Object parseConditionValue(Object value)
+			throws IllegalArgumentException, IllegalAccessException {
 		Object result = null;
 		if (null == value) {
 			// do nothing
