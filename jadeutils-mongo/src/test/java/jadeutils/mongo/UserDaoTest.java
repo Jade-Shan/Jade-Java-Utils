@@ -27,7 +27,7 @@ public class UserDaoTest {
 	private Properties props = null;
 
 	private UserDao dao = null;
-	private User user = null;
+	private List<User> users = new ArrayList<User>();
 
 	public UserDaoTest() throws IOException {
 		InputStream confIn = new BufferedInputStream(Thread.currentThread()
@@ -39,9 +39,12 @@ public class UserDaoTest {
 		ss.put("key1", "value1");
 		ss.put("key2", "value2");
 		ss.put("key3", "value3");
-		user = new User("A001", "Jade", 3, Arrays.asList(new UserAuth("func1",
-				true), new UserAuth("func2", false)), Arrays.asList("aaa",
-				"bbb"), ss, true);
+		for (int i = 0; i < 100; i++) {
+			User user = new User("A00" + i, "Jade", i, Arrays.asList(
+					new UserAuth("func1", true), new UserAuth("func2", false)),
+					Arrays.asList("aaa", "bbb"), ss, true);
+			users.add(user);
+		}
 	}
 
 	@Before
@@ -59,14 +62,16 @@ public class UserDaoTest {
 	@Test
 	public void testInsert() throws IllegalArgumentException,
 			IllegalAccessException, InterruptedException {
-		dao.insert(user);
+		for (User user : users) {
+			dao.insert(user);
+		}
 	}
 
 	@Test
 	public void testFindByMongoId() throws IllegalArgumentException,
 			IllegalAccessException, InterruptedException,
 			InstantiationException {
-		dao.insert(user);
+		dao.insert(users.get(0));
 		User u = null;
 		u = dao.getByMongoId("546f6a07cb32030f30d88ce5");
 		System.out.println(u);
@@ -90,7 +95,7 @@ public class UserDaoTest {
 			IllegalAccessException {
 		MongoResultSet<User> rs = null;
 		Condition cdt = newCondition("name", "Jade");
-		rs = dao.findByCondition(cdt);
+		rs = dao.findByCondition(cdt).sort(newCondition("level", 1)).skip(30).limit(30);
 		while (rs.hasNext()) {
 			System.out.println(rs.next().toString());
 		}
