@@ -21,7 +21,7 @@ value aaa is: ${param.hotelid}<br />
 
 
 <form action='<c:url value="/user.html" />'>
-	<input type="text" name="username" value="${cdnjadeutils}" />
+	<input type="text" name="username" value="${param.username}" />
 </form>
 
 <table>
