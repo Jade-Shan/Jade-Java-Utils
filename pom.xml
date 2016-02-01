@@ -5,7 +5,7 @@
 
 	<groupId>net.jade-dungeon</groupId>
 	<artifactId>jadeutils-parent</artifactId>
-	<version>0.1.8</version>
+	<version>0.1.9</version>
 	<packaging>pom</packaging>
 	<name>jade utils parent</name>
 
@@ -21,7 +21,7 @@
 
 	<properties>
 		<!-- mudule version -->
-		<jadeutils.version>0.1.8</jadeutils.version>
+		<jadeutils.version>0.1.9</jadeutils.version>
 		<charset.encoding>UTF-8</charset.encoding>
 		<java.version>1.8</java.version>
 		<!-- 3rd libs -->
@@ -43,8 +43,9 @@
 		<xmemcached.version>1.4.1</xmemcached.version>
 		<mongo-java-driver.version>2.12.4</mongo-java-driver.version>
 		<mysql-connector-java.version>5.1.13</mysql-connector-java.version>
-		<servlet-api.version>2.4</servlet-api.version>
-		<jsp-api.version>2.0</jsp-api.version>
+		<servlet-api.version>3.1.0</servlet-api.version>
+		<jsp-api.version>2.3.1</jsp-api.version>
+		<jstl.version>1.2.5</jstl.version>
 		<junit.version>4.8</junit.version>
 		<httpclient.version>4.3.6</httpclient.version>
 	</properties>
@@ -179,15 +180,25 @@
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
+				<artifactId>javax.servlet-api</artifactId>
 				<version>${servlet-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet.jsp</groupId>
-				<artifactId>jsp-api</artifactId>
+				<artifactId>javax.servlet.jsp-api</artifactId>
 				<version>${jsp-api.version}</version>
 				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.taglibs</groupId>
+				<artifactId>taglibs-standard-spec</artifactId>
+				<version>${jstl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.taglibs</groupId>
+				<artifactId>taglibs-standard-impl</artifactId>
+				<version>${jstl.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>

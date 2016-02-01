@@ -19,7 +19,19 @@ public class Condition {
 	}
 
 	public Condition append(LinkType type, Condition condition) {
-		this.link = new Link(type, condition);
+		Condition nextCondition = null;
+		if (null != this.link && null != this.link.condition) {
+			nextCondition = this.link.condition;
+		}
+		while (null != nextCondition && null != nextCondition.link
+				&& null != nextCondition.link.condition) {
+			nextCondition = this.link.condition;
+		}
+		if (null == nextCondition) {
+			this.link = new Link(type, condition);
+		} else {
+			nextCondition.link = new Link(type, condition);
+		}
 		return this;
 	}
 

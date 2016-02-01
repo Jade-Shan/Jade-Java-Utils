@@ -16,6 +16,21 @@ public class MongoResultSet<T extends MongoModel> {
 		this.entryClass = entryClass;
 	}
 
+	public MongoResultSet<T> skip(int n) {
+		return new MongoResultSet<T>(this.entryClass, this.cursor.skip(n));
+	}
+
+	public MongoResultSet<T> limit(int n) {
+		return new MongoResultSet<T>(this.entryClass, this.cursor.limit(n));
+	}
+
+	public MongoResultSet<T> sort(Condition orderBy)
+			throws IllegalArgumentException, IllegalAccessException //
+	{
+		return new MongoResultSet<T>(this.entryClass,
+				this.cursor.sort(MongoUtil.parseCondition(orderBy)));
+	}
+
 	public boolean hasNext() {
 		if (null == cursor) {
 			return false;
@@ -40,10 +55,11 @@ public class MongoResultSet<T extends MongoModel> {
 		}
 		return obj;
 	}
-	
-	public List<T> toList() throws InstantiationException, IllegalAccessException {
+
+	public List<T> toList() throws InstantiationException,
+			IllegalAccessException {
 		List<T> list = new ArrayList<T>();
-		while(this.hasNext()){
+		while (this.hasNext()) {
 			list.add(this.next());
 		}
 		return list;

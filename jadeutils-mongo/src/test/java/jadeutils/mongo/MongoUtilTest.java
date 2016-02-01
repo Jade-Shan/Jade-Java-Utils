@@ -67,10 +67,10 @@ public class MongoUtilTest {
 	@Test
 	public void testCondition00() throws IllegalArgumentException,
 			IllegalAccessException {
-		// {j: 3}, k: 10} }
-		BasicDBObject q1 = new BasicDBObject("j", 3).append("k", 10);
+		// {j: 3, k: 10}
+		BasicDBObject q1 = new BasicDBObject("j", 3).append("k", 10).append("l", 12);
 		Condition c = newCondition("j", 3).append(LinkType.AND,
-				newCondition("k", 10));
+				newCondition("k", 10)).append(LinkType.AND, newCondition("l", 12));
 		BasicDBObject q2 = MongoUtil.parseCondition(c);
 		assertEquals(q1, q2);
 	}

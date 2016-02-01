@@ -84,8 +84,8 @@ public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> 
 	@SuppressWarnings("unchecked")
 	public T findOneByCondition(Condition cdt) throws InstantiationException,
 			IllegalAccessException {
-		logger.debug("befor query: " + (null == cdt ? null : cdt.toString()));
 		DBObject condition = MongoUtil.parseCondition(cdt);
+		logger.debug("befor query: " + (null == condition ? null : condition.toString()));
 		DBObject rec = this.collection.findOne(condition);
 		T model = (T) MongoUtil.genModelFromRec(entryClass, rec);
 		return model;
@@ -94,8 +94,8 @@ public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> 
 	@Override
 	public MongoResultSet<T> findByCondition(Condition cdt)
 			throws IllegalArgumentException, IllegalAccessException {
-		logger.debug("befor query: " + (null == cdt ? null : cdt.toString()));
 		DBObject condition = MongoUtil.parseCondition(cdt);
+		logger.debug("befor query: " + (null == condition ? null : condition.toString()));
 		DBCursor cursor = this.collection.find(condition);
 		return new MongoResultSet<>(entryClass, cursor);
 	}
@@ -120,8 +120,9 @@ public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> 
 	private void update(Condition cdt, Condition opt, boolean upsert,
 			boolean multi) throws IllegalArgumentException,
 			IllegalAccessException {
-		this.collection.update(MongoUtil.parseCondition(cdt),
-				MongoUtil.parseCondition(opt), upsert, multi);
+		DBObject condition = MongoUtil.parseCondition(cdt);
+		logger.debug("befor query: " + (null == condition ? null : condition.toString()));
+		this.collection.update(condition, MongoUtil.parseCondition(opt), upsert, multi);
 
 	}
 
