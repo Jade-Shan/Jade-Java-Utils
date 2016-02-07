@@ -1,0 +1,20 @@
+language: java
+jdk:
+  - oraclejdk8
+
+env:
+  global:
+    - CODECOV_TOKEN=88ed8e73-30e2-43cf-98e8-7842c8362c6f
+
+branches:
+  only:
+    - master
+
+before_install:
+  - pip install --user codecov
+
+script:
+  - mvn clean package
+
+after_success:
+  - codecov
