@@ -18,7 +18,6 @@
 		<dependency>
 			<groupId>net.jade-dungeon</groupId>
 			<artifactId>jadeutils-web</artifactId>
-			<scope>${profiles.scope.compile}</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
