@@ -5,7 +5,7 @@
 
 	<groupId>net.jade-dungeon</groupId>
 	<artifactId>jadeutils-parent</artifactId>
-	<version>0.1.10</version>
+	<version>0.1.11-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>jade utils parent</name>
 
@@ -20,7 +20,7 @@
 
 	<properties>
 		<!-- mudule version -->
-		<jadeutils.version>0.1.10</jadeutils.version>
+		<jadeutils.version>0.1.11-SNAPSHOT</jadeutils.version>
 		<charset.encoding>UTF-8</charset.encoding>
 		<java.version>1.8</java.version>
 		<!-- 3rd libs -->
