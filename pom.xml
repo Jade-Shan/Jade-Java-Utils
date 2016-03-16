@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadelibs-java</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<artifactId>jadeutils-parent</artifactId>
@@ -19,13 +19,17 @@
 		<module>jadeutils-cache</module>
 		<module>jadeutils-dao</module>
 		<module>jadeutils-mongo</module>
+		<!--
 		<module>jadeutils-web</module>
+				 -->
 		<module>jadeutils-sandtable</module>
-		<!-- 
-		 -->
 	</modules>
 
 	<properties>
+		<!-- 
+		<charset.encoding>UTF-8</charset.encoding>
+		<java.version>1.8</java.version>
+				 -->
 		<!-- mudule version -->
 		<jadeutils-base.version>0.1.11-SNAPSHOT</jadeutils-base.version>
 		<jadeutils-cache.version>0.1.11-SNAPSHOT</jadeutils-cache.version>
@@ -33,46 +37,9 @@
 		<jadeutils-mongo.version>0.1.11-SNAPSHOT</jadeutils-mongo.version>
 		<jadeutils-web.version>0.1.11-SNAPSHOT</jadeutils-web.version>
 		<jadeutils-sandtable.version>0.1.11-SNAPSHOT</jadeutils-sandtable.version>
-		<!-- 
-		<charset.encoding>UTF-8</charset.encoding>
-		<java.version>1.8</java.version>
-		 -->
-		<!-- 3rd libs -->
-		<!-- 
-		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
-		<cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
-		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
-		<log4j.version>1.2.17</log4j.version>
-		<slf4j.version>1.7.0</slf4j.version>
-		<kaptcha.version>2.3.2</kaptcha.version>
-		<commons-lang.version>2.6</commons-lang.version>
-		<commons-io.version>2.4</commons-io.version>
-		<commons-fileupload.version>1.3</commons-fileupload.version>
-		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<jackson-mapper-asl.version>1.7.1</jackson-mapper-asl.version>
-		<jopt-simple.version>4.4</jopt-simple.version>
-		<javassist.version>3.4.GA</javassist.version>
-		<springframework.version>3.0.5.RELEASE</springframework.version>
-		<hibernate.version>3.6.1.Final</hibernate.version>
-		<xmemcached.version>1.4.1</xmemcached.version>
-		<mongo-java-driver.version>2.12.4</mongo-java-driver.version>
-		<mysql-connector-java.version>5.1.13</mysql-connector-java.version>
-		<servlet-api.version>3.1.0</servlet-api.version>
-		<jsp-api.version>2.3.1</jsp-api.version>
-		<jstl.version>1.2.5</jstl.version>
-		<junit.version>4.8</junit.version>
-		<httpclient.version>4.3.6</httpclient.version>
-		 -->
 	</properties>
 
 	<dependencies>
-		<!-- sub modules
-			<dependency>
-				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-base</artifactId>
-				<version>${jadeutils.version}</version>
-			</dependency>
-		 -->
 	</dependencies>
 
 	<build>
