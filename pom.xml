@@ -3,7 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.jade-dungeon</groupId>
+	<parent>
+		<groupId>net.jade-dungeon</groupId>
+		<artifactId>jadelibs-java</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
 	<artifactId>jadeutils-parent</artifactId>
 	<version>0.1.11-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -16,14 +21,24 @@
 		<module>jadeutils-mongo</module>
 		<module>jadeutils-web</module>
 		<module>jadeutils-sandtable</module>
+		<!-- 
+		 -->
 	</modules>
 
 	<properties>
 		<!-- mudule version -->
-		<jadeutils.version>0.1.11-SNAPSHOT</jadeutils.version>
+		<jadeutils-base.version>0.1.11-SNAPSHOT</jadeutils-base.version>
+		<jadeutils-cache.version>0.1.11-SNAPSHOT</jadeutils-cache.version>
+		<jadeutils-dao.version>0.1.11-SNAPSHOT</jadeutils-dao.version>
+		<jadeutils-mongo.version>0.1.11-SNAPSHOT</jadeutils-mongo.version>
+		<jadeutils-web.version>0.1.11-SNAPSHOT</jadeutils-web.version>
+		<jadeutils-sandtable.version>0.1.11-SNAPSHOT</jadeutils-sandtable.version>
+		<!-- 
 		<charset.encoding>UTF-8</charset.encoding>
 		<java.version>1.8</java.version>
+		 -->
 		<!-- 3rd libs -->
+		<!-- 
 		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
 		<cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
 		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
@@ -47,333 +62,21 @@
 		<jstl.version>1.2.5</jstl.version>
 		<junit.version>4.8</junit.version>
 		<httpclient.version>4.3.6</httpclient.version>
+		 -->
 	</properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency> <!-- nop log -->
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.code.kaptcha</groupId>
-				<artifactId>kaptcha</artifactId>
-				<version>${kaptcha.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>${commons-lang.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>${commons-io.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-				<version>${commons-fileupload.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>${commons-dbcp.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-mapper-asl</artifactId>
-				<version>${jackson-mapper-asl.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.sf.jopt-simple</groupId>
-				<artifactId>jopt-simple</artifactId>
-				<version>${jopt-simple.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javassist</groupId>
-				<artifactId>javassist</artifactId>
-				<version>${javassist.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context-support</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jms</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${springframework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${springframework.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-				<version>${httpclient.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.googlecode.xmemcached</groupId>
-				<artifactId>xmemcached</artifactId>
-				<version>${xmemcached.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql-connector-java.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mongodb</groupId>
-				<artifactId>mongo-java-driver</artifactId>
-				<version>${mongo-java-driver.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${servlet-api.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet.jsp</groupId>
-				<artifactId>javax.servlet.jsp-api</artifactId>
-				<version>${jsp-api.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.taglibs</groupId>
-				<artifactId>taglibs-standard-spec</artifactId>
-				<version>${jstl.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.taglibs</groupId>
-				<artifactId>taglibs-standard-impl</artifactId>
-				<version>${jstl.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<!-- sub modules -->
+	<dependencies>
+		<!-- sub modules
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
 				<artifactId>jadeutils-base</artifactId>
 				<version>${jadeutils.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-cache</artifactId>
-				<version>${jadeutils.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-dao</artifactId>
-				<version>${jadeutils.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-mongo</artifactId>
-				<version>${jadeutils.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-web</artifactId>
-				<version>${jadeutils.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-sandtable</artifactId>
-				<version>${jadeutils.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<dependencies>
+		 -->
 	</dependencies>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin.version}</version>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-						<encoding>${charset.encoding}</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<configuration>
-						<encoding>${charset.encoding}</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${maven-surefire-plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>cobertura-maven-plugin</artifactId>
-					<version>${cobertura-maven-plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.7.5.201505241946</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<includes><include>**/UnitTestSuite.java</include></includes>
-					<excludes><exclude>**/*Tests.java</exclude></excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-			</plugin>
-			<!-- =========================== -->
-			<!--        jacoco plugin        -->
-			<!-- =========================== -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals><goal>prepare-agent</goal></goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>test</phase>
-						<goals><goal>report</goal></goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-
 	</build>
 
-	<reporting>
-		<outputDirectory>target/site</outputDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>jade-dungeon-snapshots</id>
-			<name>Jade-Dungeon Repo SNAPSHOTS</name>
-			<url>http://nexus.jade-dungeon.net/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>jade-dungeon-releases</id>
-			<name>Jade-Dungeon Repo Release</name>
-			<url>http://nexus.jade-dungeon.net/nexus/content/repositories/releases/</url>
-		</repository>
-	</distributionManagement>
-
-	<!-- =========================== -->
-	<!-- different env -->
-	<!-- =========================== -->
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation><activeByDefault>true</activeByDefault></activation>
-			<build>
-				<filters><filter>params-dev.properties</filter></filters>
-			</build>
-		</profile>
-		<profile>
-			<id>prd</id>
-			<build>
-				<filters><filter>params-prd.properties</filter></filters>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<includes><include>**/AllTestSuite.java</include></includes>
-							<excludes><exclude>**/*Tests.java</exclude></excludes>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>rls</id>
-			<build><filters><filter>params-prd.properties</filter></filters></build>
-		</profile>
-	</profiles>
 
 </project>  

@@ -11,20 +11,22 @@
 
 	<artifactId>jadeutils-mongo</artifactId>
 	<name>Jade java utils mongo</name>
+	<version>${jadeutils-mongo.version}</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.jade-dungeon</groupId>
 			<artifactId>jadeutils-base</artifactId>
+			<version>${jadeutils-base.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 		</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

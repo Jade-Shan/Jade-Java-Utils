@@ -11,11 +11,13 @@
 
 	<artifactId>jadeutils-cache</artifactId>
 	<name>Jade java utils cache</name>
+	<version>${jadeutils-cache.version}</version>
 	
 	<dependencies>
 		<dependency>
 			<groupId>net.jade-dungeon</groupId>
 			<artifactId>jadeutils-base</artifactId>
+			<version>${jadeutils-base.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.xmemcached</groupId>

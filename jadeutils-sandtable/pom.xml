@@ -11,6 +11,7 @@
 
 	<artifactId>jadeutils-sandtable</artifactId>
 	<name>Jade sandTable</name>
+	<version>${jadeutils-sandtable.version}</version>
 
 	<dependencies>
 		<dependency>

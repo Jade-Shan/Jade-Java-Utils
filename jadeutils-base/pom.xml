@@ -11,6 +11,7 @@
 
 	<artifactId>jadeutils-base</artifactId>
 	<name>Jade java utils base</name>
+	<version>${jadeutils-base.version}</version>
 
 	<dependencies>
 		<dependency>
