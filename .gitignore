@@ -13,6 +13,8 @@ Servers/
 
 # maven files #
 target/
+.cache-main
+.cache-tests
 
 # Package Files #
 *.jar
