@@ -19,9 +19,7 @@
 		<module>jadeutils-cache</module>
 		<module>jadeutils-dao</module>
 		<module>jadeutils-mongo</module>
-		<!--
 		<module>jadeutils-web</module>
-				 -->
 		<module>jadeutils-sandtable</module>
 	</modules>
 
