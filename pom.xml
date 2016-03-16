@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>jadeutils-parent</artifactId>
-	<version>0.1.11-SNAPSHOT</version>
+	<version>0.1.11</version>
 	<packaging>pom</packaging>
 	<name>jade utils parent</name>
 
