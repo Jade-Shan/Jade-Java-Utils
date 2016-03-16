@@ -29,12 +29,12 @@
 		<java.version>1.8</java.version>
 				 -->
 		<!-- mudule version -->
-		<jadeutils-base.version>0.1.11-SNAPSHOT</jadeutils-base.version>
-		<jadeutils-cache.version>0.1.11-SNAPSHOT</jadeutils-cache.version>
-		<jadeutils-dao.version>0.1.11-SNAPSHOT</jadeutils-dao.version>
-		<jadeutils-mongo.version>0.1.11-SNAPSHOT</jadeutils-mongo.version>
-		<jadeutils-web.version>0.1.11-SNAPSHOT</jadeutils-web.version>
-		<jadeutils-sandtable.version>0.1.11-SNAPSHOT</jadeutils-sandtable.version>
+		<jadeutils-base.version>0.1.11</jadeutils-base.version>
+		<jadeutils-cache.version>0.1.11</jadeutils-cache.version>
+		<jadeutils-dao.version>0.1.11</jadeutils-dao.version>
+		<jadeutils-mongo.version>0.1.11</jadeutils-mongo.version>
+		<jadeutils-web.version>0.1.11</jadeutils-web.version>
+		<jadeutils-sandtable.version>0.1.11</jadeutils-sandtable.version>
 	</properties>
 
 	<dependencies>
