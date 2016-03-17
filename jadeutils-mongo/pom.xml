@@ -6,18 +6,20 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadeutils-parent</artifactId>
-		<version>0.1.11-SNAPSHOT</version>
+		<version>0.1.12</version>
 	</parent>
 
 	<artifactId>jadeutils-mongo</artifactId>
 	<name>Jade java utils mongo</name>
+	<!-- 
+	<version>0.1.12-SNAPSHOT</version>
+			 -->
 	<version>${jadeutils-mongo.version}</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.jade-dungeon</groupId>
 			<artifactId>jadeutils-base</artifactId>
-			<version>${jadeutils-base.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
