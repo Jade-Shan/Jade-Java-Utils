@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadeutils-parent</artifactId>
-		<version>0.1.12-SNAPSHOT</version>
+		<version>0.1.12</version>
 	</parent>
 
 	<artifactId>jadeutils-base</artifactId>
@@ -17,10 +17,6 @@
 	<version>${jadeutils-base.version}</version>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
 		<!-- <dependency> <groupId>com.google.code.kaptcha</groupId> <artifactId>kaptcha</artifactId> 
 			<version>${kaptcha.version}</version> </dependency> -->
 		<dependency>
@@ -38,6 +34,10 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
 
