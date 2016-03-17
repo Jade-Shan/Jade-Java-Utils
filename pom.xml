@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadelibs-java</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.4-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jadeutils-parent</artifactId>
@@ -37,8 +37,40 @@
 		<jadeutils-sandtable.version>0.1.12-SNAPSHOT</jadeutils-sandtable.version>
 	</properties>
 
-	<dependencies>
-	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-base</artifactId>
+				<version>${jadeutils-base.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-cache</artifactId>
+				<version>${jadeutils-cache.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-dao</artifactId>
+				<version>${jadeutils-dao.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-mongo</artifactId>
+				<version>${jadeutils-mongo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-web</artifactId>
+				<version>${jadeutils-web.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-sandtable</artifactId>
+				<version>${jadeutils-sandtable.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 	</build>
