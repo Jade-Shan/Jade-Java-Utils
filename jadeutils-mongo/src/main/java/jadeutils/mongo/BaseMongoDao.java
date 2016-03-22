@@ -15,6 +15,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 
 public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> {
@@ -31,10 +32,29 @@ public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> 
 		try {
 			if (null != serverList && serverList.size() > 0) {
 				List<ServerAddress> addrlist = new ArrayList<>();
+				List<MongoCredential> credentialsList = new ArrayList<MongoCredential>();
 				for (MongoServer s : serverList) {
 					addrlist.add(new ServerAddress(s.getHost(), s.getPort()));
+					if (null != s.getAuthList() && s.getAuthList().size() > 0) {
+						for (String[] arr : s.getAuthList()) {
+							if (null != arr[0] && null != arr[1]
+									&& null != arr[2] && arr[0].length() > 0
+									&& arr[1].length() > 0
+									&& arr[2].length() > 0) //
+							{
+								MongoCredential credential = MongoCredential
+										.createMongoCRCredential(arr[1],
+												arr[0], arr[2].toCharArray());
+								credentialsList.add(credential);
+							}
+						}
+					}
 				}
-				this.client = new MongoClient(addrlist);
+				if (credentialsList.size() > 0) {
+					this.client = new MongoClient(addrlist, credentialsList);
+				} else {
+					this.client = new MongoClient(addrlist);
+				}
 			}
 			Type genType = this.getClass().getGenericSuperclass();
 			Type[] params = ((ParameterizedType) genType)
@@ -85,7 +105,8 @@ public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> 
 	public T findOneByCondition(Condition cdt) throws InstantiationException,
 			IllegalAccessException {
 		DBObject condition = MongoUtil.parseCondition(cdt);
-		logger.debug("befor query: " + (null == condition ? null : condition.toString()));
+		logger.debug("befor query: "
+				+ (null == condition ? null : condition.toString()));
 		DBObject rec = this.collection.findOne(condition);
 		T model = (T) MongoUtil.genModelFromRec(entryClass, rec);
 		return model;
@@ -95,13 +116,15 @@ public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> 
 	public MongoResultSet<T> findByCondition(Condition cdt)
 			throws IllegalArgumentException, IllegalAccessException {
 		DBObject condition = MongoUtil.parseCondition(cdt);
-		logger.debug("befor query: " + (null == condition ? null : condition.toString()));
+		logger.debug("befor query: "
+				+ (null == condition ? null : condition.toString()));
 		DBCursor cursor = this.collection.find(condition);
 		return new MongoResultSet<>(entryClass, cursor);
 	}
 
 	@Override
-	public void insertOrUpdate(Condition cdt, Condition opt) throws IllegalArgumentException, IllegalAccessException {
+	public void insertOrUpdate(Condition cdt, Condition opt)
+			throws IllegalArgumentException, IllegalAccessException {
 		this.update(cdt, opt, true, false);
 	}
 
@@ -121,8 +144,10 @@ public abstract class BaseMongoDao<T extends MongoModel> implements MongoDao<T> 
 			boolean multi) throws IllegalArgumentException,
 			IllegalAccessException {
 		DBObject condition = MongoUtil.parseCondition(cdt);
-		logger.debug("befor query: " + (null == condition ? null : condition.toString()));
-		this.collection.update(condition, MongoUtil.parseCondition(opt), upsert, multi);
+		logger.debug("befor query: "
+				+ (null == condition ? null : condition.toString()));
+		this.collection.update(condition, MongoUtil.parseCondition(opt),
+				upsert, multi);
 
 	}
 
