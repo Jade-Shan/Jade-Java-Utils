@@ -1,5 +1,7 @@
 package jadeutils.net;
 
+import jadeutils.net.dns.FakeDnsResolver;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;

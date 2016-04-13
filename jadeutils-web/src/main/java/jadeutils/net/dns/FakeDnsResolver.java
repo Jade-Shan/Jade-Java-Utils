@@ -1,4 +1,4 @@
-package jadeutils.net;
+package jadeutils.net.dns;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

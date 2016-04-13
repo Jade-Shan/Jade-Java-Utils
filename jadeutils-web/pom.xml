@@ -11,9 +11,7 @@
 
 	<artifactId>jadeutils-web</artifactId>
 	<name>Jade java utils web</name>
-	<!-- 
-	<version>0.1.12-SNAPSHOT</version>
-			 -->
+	<!-- <version>0.1.12-SNAPSHOT</version> -->
 	<version>${jadeutils-web.version}</version>
 
 	<dependencies>
@@ -56,6 +54,14 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dnsjava</groupId>
+			<artifactId>dnsjava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
