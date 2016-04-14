@@ -1,9 +1,7 @@
 package jadeutils.net.dns;
 
-import jadeutils.encryption.ByteArrayQueue;
 import jadeutils.encryption.Bytes;
 import jadeutils.encryption.Numbers;
-import jadeutils.net.http.HttpPool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,11 +12,9 @@ import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xbill.DNS.ARecord;
 import org.xbill.DNS.DClass;
 import org.xbill.DNS.Flags;
@@ -37,32 +33,6 @@ public class DDNSService {
 	private HashMap<String, Record[]> aaaaRecords = new HashMap<>();
 	private HashMap<String, Record[]> nsRecords = new HashMap<>();
 	private HashMap<String, Record[]> mxRecords = new HashMap<>();
-
-	private void updateDynamicRecords(HttpPool pool, int ttl) {
-		ByteArrayQueue body = new ByteArrayQueue();
-		try {
-			int status = pool.get("?r=" + System.currentTimeMillis(), null,
-					body, null);
-			if (status >= 400) {
-				System.out.println(body.toString());
-				return;
-			}
-		} catch (IOException e) {
-			System.out.println(e);
-			return;
-		}
-		try {
-			JSONObject json = new JSONObject(body.toString());
-			Iterator<?> it = json.keys();
-			while (it.hasNext()) {
-				String key = (String) it.next();
-				String value = json.optString(key);
-				this.addIp(key, value, ttl);
-			}
-		} catch (JSONException e) {
-			System.out.println(body.toString());
-		}
-	}
 
 	/**
 	 * 把IP地址从字符串转为byte数组。
@@ -103,14 +73,46 @@ public class DDNSService {
 	 */
 	private void addIp(String hostName, String ip, int ttl) {
 		try {
-			Name name = new Name(absoluteHostName(hostName));
-			InetAddress addr = InetAddress.getByAddress(parseIpAddress(ip));
-			ARecord rec = new ARecord(name, DClass.IN, ttl, addr);
+			ARecord rec = createARecord(hostName, parseIpAddress(ip), ttl);
 			dynamicRecords.put(hostName, rec);
 			System.out.println("add rec: " + hostName + " -> " + ip);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 合建 一条解析 记录
+	 * 
+	 * @param hostName
+	 * @param ip
+	 * @param ttl
+	 * @return
+	 */
+	private ARecord createARecord(String hostName, byte[] ip, int ttl) {
+		ARecord rec = null;
+		try {
+			Name name = new Name(absoluteHostName(hostName));
+			InetAddress addr = InetAddress.getByAddress(ip);
+			rec = new ARecord(name, DClass.IN, ttl, addr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rec;
+	}
+
+	private ARecord findARecordInPublicDNS(String hostName, int ttl) {
+		ARecord rec = null;
+		try {
+			InetAddress addr = InetAddress.getByName(hostName);
+			rec = this.createARecord(hostName, addr.getAddress(), ttl);
+			dynamicRecords.put(hostName, rec);
+			System.out.println("add rec: " + hostName + " -> "
+					+ addr.getAddress());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rec;
 	}
 
 	/**
@@ -175,6 +177,9 @@ public class DDNSService {
 			records = aRecords.get(host);
 			if (records == null) {
 				Record record = dynamicRecords.get(host);
+				if (null == record) {
+					record = findARecordInPublicDNS(host, 60_000);
+				}
 				System.out.println("find record: " + host + " -> " + record);
 				records = record == null ? null : new Record[] { record };
 			}
@@ -209,19 +214,17 @@ public class DDNSService {
 	 * 
 	 * @param port
 	 */
-	public void doService(int port) {
-		final HttpPool addrApi = new HttpPool("http://localhost:8383/addr.jsp",
-				10_000);
+	public void doService(int port, DNSUpdater dnsUpdater) {
 		try (DatagramSocket socket = new DatagramSocket(port)) {
 			Thread thread = new Thread() {
 				@Override
 				public void run() {
 					while (true) {
-						updateDynamicRecords(addrApi, 10_000);
-						try {
-							sleep(1000);
-						} catch (InterruptedException e) {
-							/**/
+						List<String[]> recs = dnsUpdater.updateDynamicRecords();
+						if (null != recs && recs.size() > 0) {
+							for (String[] rec : recs) {
+								addIp(rec[0], rec[1], 5);
+							}
 						}
 					}
 				}
@@ -281,21 +284,12 @@ public class DDNSService {
 
 	public static void main(String[] args) {
 		int port = 53;
-		int dynamicTtl = 5;
+		String apiAddr = "http://localhost:8383/addr.jsp";
+		int apiTimeout = 10_000;
 
-		String testName = "www.jadeccc.com";
-		String testIp = "10.32.152.136";
-
+		DNSUpdater updater = new RemoteDNSUpdater(apiAddr, apiTimeout);
 		DDNSService ddns = new DDNSService();
-		ddns.addIp(testName, testIp, dynamicTtl);
-
-		try {
-			Thread.sleep(6000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-
-		ddns.doService(port);
+		ddns.doService(port, updater);
 	}
 
 }
