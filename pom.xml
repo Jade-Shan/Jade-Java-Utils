@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadelibs-java</artifactId>
-		<version>1.0.5-SNAPSHOT</version>
+		<version>1.0.6-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jadeutils-parent</artifactId>
@@ -35,6 +35,7 @@
 		<jadeutils-mongo.version>0.1.14-SNAPSHOT</jadeutils-mongo.version>
 		<jadeutils-web.version>0.1.14-SNAPSHOT</jadeutils-web.version>
 		<jadeutils-sandtable.version>0.1.14-SNAPSHOT</jadeutils-sandtable.version>
+		<jadeutils-cdn.version>0.1.14-SNAPSHOT</jadeutils-cdn.version>
 	</properties>
 
 	<dependencyManagement>
@@ -68,6 +69,11 @@
 				<groupId>net.jade-dungeon</groupId>
 				<artifactId>jadeutils-sandtable</artifactId>
 				<version>${jadeutils-sandtable.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>jadeutils-cdn</artifactId>
+				<version>${jadeutils-cdn.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

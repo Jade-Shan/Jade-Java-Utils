@@ -13,6 +13,7 @@
 	<artifactId>jadeutils-cdn</artifactId>
 	<name>Simple cdn</name>
 	<packaging>war</packaging>
+	<version>${jadeutils-cdn.version}</version>
 
 	<dependencies>
 		<dependency>
