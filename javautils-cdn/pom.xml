@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.jade-dungeon</groupId>
+		<artifactId>javautils</artifactId>
+		<version>0.1.14-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>javautils-cdn</artifactId>
+	<name>Simple cdn</name>
+	<packaging>war</packaging>
+	<version>${javautils-cdn.version}</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.jade-dungeon</groupId>
+			<artifactId>javautils-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+
+		<!-- <finalName>javautils-cdn</finalName> -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<!-- filter with: mvn resources:resources -Dparam=value -->
+				<filtering>true</filtering>
+				<includes>
+					<include>upload.properties</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<!-- mvn jetty:run -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<httpConnector>
+						<port>8080</port>
+					</httpConnector>
+					<!-- <jettyXml>jetty.xml,jetty-http.xml,jetty-ssl.xml,jetty-https.xml</jettyXml> -->
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webAppConfig>
+						<contextPath>/javautils-cdn</contextPath>
+					</webAppConfig>
+				</configuration>
+			</plugin>
+			<!-- mvn cargo:start -->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<configuration>
+					<container>
+						<containerId>tomcat6x</containerId>
+						<home>/opt/morganstudio/server/tomcat6</home>
+					</container>
+					<configuration>
+						<type>standalone</type>
+						<home>${project.build.directory}/tomcat6x</home>
+						<properties>
+							<cargo.servlet.port>8080</cargo.servlet.port>
+						</properties>
+					</configuration>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>
