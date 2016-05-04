@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>javautils</artifactId>
-	<version>0.1.14-SNAPSHOT</version>
+	<version>0.1.14</version>
 	<packaging>pom</packaging>
 	<name>jade utils parent</name>
 
@@ -29,13 +29,13 @@
 		<java.version>1.8</java.version>
 				 -->
 		<!-- mudule version -->
-		<javautils-base.version>0.1.14-SNAPSHOT</javautils-base.version>
-		<javautils-cache.version>0.1.14-SNAPSHOT</javautils-cache.version>
-		<javautils-dao.version>0.1.14-SNAPSHOT</javautils-dao.version>
-		<javautils-mongo.version>0.1.14-SNAPSHOT</javautils-mongo.version>
-		<javautils-web.version>0.1.14-SNAPSHOT</javautils-web.version>
-		<javautils-sandtable.version>0.1.14-SNAPSHOT</javautils-sandtable.version>
-		<javautils-cdn.version>0.1.14-SNAPSHOT</javautils-cdn.version>
+		<javautils-base.version>0.1.14</javautils-base.version>
+		<javautils-cache.version>0.1.14</javautils-cache.version>
+		<javautils-dao.version>0.1.14</javautils-dao.version>
+		<javautils-mongo.version>0.1.14</javautils-mongo.version>
+		<javautils-web.version>0.1.14</javautils-web.version>
+		<javautils-sandtable.version>0.1.14</javautils-sandtable.version>
+		<javautils-cdn.version>0.1.14</javautils-cdn.version>
 	</properties>
 
 	<dependencyManagement>

@@ -6,14 +6,11 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>javautils</artifactId>
-		<version>0.1.14-SNAPSHOT</version>
+		<version>0.1.14</version>
 	</parent>
 
 	<artifactId>javautils-sandtable</artifactId>
 	<name>Jade sandTable</name>
-	<!-- 
-	<version>0.1.12-SNAPSHOT</version>
-			 -->
 	<version>${javautils-sandtable.version}</version>
 
 	<dependencies>

@@ -6,14 +6,11 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>javautils</artifactId>
-		<version>0.1.14-SNAPSHOT</version>
+		<version>0.1.14</version>
 	</parent>
 
 	<artifactId>javautils-dao</artifactId>
 	<name>Jade java utils dao</name>
-	<!-- 
-	<version>0.1.12-SNAPSHOT</version>
-			 -->
 	<version>${javautils-dao.version}</version>
 
 	<dependencies>
