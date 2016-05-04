@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>javautils</artifactId>
-		<version>0.1.14</version>
+		<version>0.1.15-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>javautils-mongo</artifactId>
