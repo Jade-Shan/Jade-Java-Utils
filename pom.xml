@@ -6,21 +6,21 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadelibs-java</artifactId>
-		<version>1.0.4</version>
+		<version>1.0.5</version>
 	</parent>
 
-	<artifactId>jadeutils-parent</artifactId>
-	<version>0.1.13</version>
+	<artifactId>javautils</artifactId>
+	<version>0.1.14</version>
 	<packaging>pom</packaging>
 	<name>jade utils parent</name>
 
 	<modules>
-		<module>jadeutils-base</module>
-		<module>jadeutils-cache</module>
-		<module>jadeutils-dao</module>
-		<module>jadeutils-mongo</module>
-		<module>jadeutils-web</module>
-		<module>jadeutils-sandtable</module>
+		<module>javautils-base</module>
+		<module>javautils-cache</module>
+		<module>javautils-dao</module>
+		<module>javautils-mongo</module>
+		<module>javautils-web</module>
+		<module>javautils-sandtable</module>
 	</modules>
 
 	<properties>
@@ -29,45 +29,51 @@
 		<java.version>1.8</java.version>
 				 -->
 		<!-- mudule version -->
-		<jadeutils-base.version>0.1.13</jadeutils-base.version>
-		<jadeutils-cache.version>0.1.13</jadeutils-cache.version>
-		<jadeutils-dao.version>0.1.13</jadeutils-dao.version>
-		<jadeutils-mongo.version>0.1.13</jadeutils-mongo.version>
-		<jadeutils-web.version>0.1.13</jadeutils-web.version>
-		<jadeutils-sandtable.version>0.1.13</jadeutils-sandtable.version>
+		<javautils-base.version>0.1.14</javautils-base.version>
+		<javautils-cache.version>0.1.14</javautils-cache.version>
+		<javautils-dao.version>0.1.14</javautils-dao.version>
+		<javautils-mongo.version>0.1.14</javautils-mongo.version>
+		<javautils-web.version>0.1.14</javautils-web.version>
+		<javautils-sandtable.version>0.1.14</javautils-sandtable.version>
+		<javautils-cdn.version>0.1.14</javautils-cdn.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-base</artifactId>
-				<version>${jadeutils-base.version}</version>
+				<artifactId>javautils-base</artifactId>
+				<version>${javautils-base.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-cache</artifactId>
-				<version>${jadeutils-cache.version}</version>
+				<artifactId>javautils-cache</artifactId>
+				<version>${javautils-cache.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-dao</artifactId>
-				<version>${jadeutils-dao.version}</version>
+				<artifactId>javautils-dao</artifactId>
+				<version>${javautils-dao.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-mongo</artifactId>
-				<version>${jadeutils-mongo.version}</version>
+				<artifactId>javautils-mongo</artifactId>
+				<version>${javautils-mongo.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-web</artifactId>
-				<version>${jadeutils-web.version}</version>
+				<artifactId>javautils-web</artifactId>
+				<version>${javautils-web.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
-				<artifactId>jadeutils-sandtable</artifactId>
-				<version>${jadeutils-sandtable.version}</version>
+				<artifactId>javautils-sandtable</artifactId>
+				<version>${javautils-sandtable.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jade-dungeon</groupId>
+				<artifactId>javautils-cdn</artifactId>
+				<version>${javautils-cdn.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
