@@ -83,41 +83,42 @@ public class RegexTest {
 		}
 	}
 
-	@Test
-	public void testXvfb() throws Exception {
-		if (null != osName && osName.toLowerCase().contains("linux")) {
-			String script = " Xvfb :77 -screen 0 1024x768x24 & ";
-			System.out.println(script);
+//	@Test
+//	public void testXvfb() throws Exception {
+//		if (null != osName && osName.toLowerCase().contains("linux")) {
+//			String script = " Xvfb :77 -screen 0 1024x768x24 & ";
+//			System.out.println(script);
+//			// ShellUtil shell = new ShellUtil();
+//			// SysExecResult result = shell.runBashScript(script, null, null);
+//			// System.out.println(result.getOut());
+//		}
+//	}
+//
+//	@Test
+//	public void testTempRander() throws Exception {
+//		if (null != osName && osName.toLowerCase().contains("linux")) {
+//			String script = TextTempletRanderTool.render(this.scpTemplet,
+//					scpParams);
+//			System.out.println(script);
+//			script = "ls -al";
+//			// ShellUtil shell = new ShellUtil();
+//			// SysExecResult result = shell.runBashScript(script, null, null);
+//			// System.out.println(result.getOut());
+//		}
+//	}
+//
+//	@Test
+//	public void testWinCmd() throws Exception {
+//		if (null != osName && osName.toLowerCase().contains("windows")) {
 //			ShellUtil shell = new ShellUtil();
-//			SysExecResult result = shell.runBashScript(script, null, null);
+//			// 定义对调用结果的输出流的处理方法
+//			// 这里是把输出流转为String
+//			DefaultStreamHandler hdl = shell.new DefaultStreamHandler("GB2312");
+//			shell.setStdoutCallback(hdl);
+//			shell.setStderrCallback(hdl);
+//			SysExecResult result = shell.runWinCmd("dir", null, null);
 //			System.out.println(result.getOut());
-		}
-	}
+//		}
+//	}
 
-	@Test
-	public void testTempRander() throws Exception {
-		if (null != osName && osName.toLowerCase().contains("linux")) {
-			String script = TextTempletRanderTool.render(this.scpTemplet,
-					scpParams);
-			System.out.println(script);
-			script = "ls -al";
-//			ShellUtil shell = new ShellUtil();
-//			SysExecResult result = shell.runBashScript(script, null, null);
-//			System.out.println(result.getOut());
-		}
-	}
-
-	@Test
-	public void testWinCmd() throws Exception {
-		if (null != osName && osName.toLowerCase().contains("windows")) {
-			ShellUtil shell = new ShellUtil();
-			// 定义对调用结果的输出流的处理方法
-			// 这里是把输出流转为String
-			DefaultStreamHandler hdl = shell.new DefaultStreamHandler("GB2312");
-			shell.setStdoutCallback(hdl);
-			shell.setStderrCallback(hdl);
-			SysExecResult result = shell.runWinCmd("dir", null, null);
-			System.out.println(result.getOut());
-		}
-	}
 }
