@@ -8,7 +8,7 @@ public class BinaryCoder {
 	public static final int INT_BYTES = Integer.SIZE / Byte.SIZE;
 	public static final int LONG_BYTES = Long.SIZE / Byte.SIZE;
 
-	/**
+	/*
 	 * 用十六进制字符串显示一个字节的内容
 	 * 
 	 * @param b
@@ -35,7 +35,7 @@ public class BinaryCoder {
 		return result.toString();
 	}
 
-	/**
+	/*
 	 * 用十进制显示数组中的每个字节
 	 * 
 	 * @param byteStream
@@ -52,7 +52,7 @@ public class BinaryCoder {
 		return rtn.toString();
 	}
 
-	/**
+	/*
 	 * 把长度为size个字节的变量long存入数组dst，dst前offset个字节已经存放了其他内容了。
 	 * 
 	 * @param byteStream
@@ -76,7 +76,7 @@ public class BinaryCoder {
 		return offset;
 	}
 
-	/**
+	/*
 	 * 从数组中取出数据
 	 * 
 	 * @param byteStream

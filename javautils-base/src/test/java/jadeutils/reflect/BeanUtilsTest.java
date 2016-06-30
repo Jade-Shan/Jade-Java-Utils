@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.reflect;
@@ -13,20 +13,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
+/*
  * @author SHAN013
  * 
  */
 public class BeanUtilsTest {
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 	}
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@After

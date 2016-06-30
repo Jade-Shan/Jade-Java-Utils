@@ -1,11 +1,11 @@
-/**
+/*
  * 
  */
 package jadeutils.datastructures;
 
 import java.util.List;
 
-/**
+/*
  * @author morgan
  * 
  */

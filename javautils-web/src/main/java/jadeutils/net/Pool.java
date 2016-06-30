@@ -5,17 +5,17 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class Pool<T, E extends Exception> implements AutoCloseable {
 	protected abstract T makeObject() throws E;
-	/** 
+	/* 
 	 * @param obj
 	 * @throws E
 	 */
-	protected void activateObject(T obj) throws E {/**/}
-	/** 
+	protected void activateObject(T obj) throws E {/* */}
+	/* 
 	 * @param obj
 	 * @throws E
 	 */
-	protected void passivateObject(T obj) throws E {/**/}
-	/** @param obj */
+	protected void passivateObject(T obj) throws E {/* */}
+	/* @param obj */
 	protected abstract void destroyObject(T obj);
 
 	class Entry {

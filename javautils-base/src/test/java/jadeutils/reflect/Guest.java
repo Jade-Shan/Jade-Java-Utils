@@ -1,9 +1,9 @@
-/**
+/*
  * 
  */
 package jadeutils.reflect;
 
-/**
+/*
  * @author SHAN013
  * 
  */

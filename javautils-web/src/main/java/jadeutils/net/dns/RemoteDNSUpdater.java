@@ -44,7 +44,7 @@ public class RemoteDNSUpdater implements DNSUpdater {
 			try {
 				Thread.sleep(5_000);
 			} catch (InterruptedException e) {
-				/**/
+				/* */
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

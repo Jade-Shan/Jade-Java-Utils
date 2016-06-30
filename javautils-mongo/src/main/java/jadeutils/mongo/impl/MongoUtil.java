@@ -20,7 +20,7 @@ import com.mongodb.DBObject;
 
 public class MongoUtil<T extends MongoModel> {
 
-	/**
+	/*
 	 * get table Name from Object
 	 * 
 	 * @param obj
@@ -32,7 +32,7 @@ public class MongoUtil<T extends MongoModel> {
 		return null == md ? null : md.collectionName();
 	}
 
-	/**
+	/*
 	 * generate rec from object
 	 * 
 	 * @param obj
@@ -58,7 +58,7 @@ public class MongoUtil<T extends MongoModel> {
 		return rec;
 	}
 
-	/**
+	/*
 	 * 
 	 * @param clazz
 	 * @param rec
@@ -100,7 +100,7 @@ public class MongoUtil<T extends MongoModel> {
 		return obj;
 	}
 
-	/**
+	/*
 	 * 
 	 * @param clazz
 	 * @param value
@@ -154,7 +154,7 @@ public class MongoUtil<T extends MongoModel> {
 		return result;
 	}
 
-	/**
+	/*
 	 * 
 	 * @param value
 	 * @return
@@ -202,7 +202,7 @@ public class MongoUtil<T extends MongoModel> {
 		return result;
 	}
 
-	/**
+	/*
 	 * 
 	 * @param condition
 	 * @return

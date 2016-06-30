@@ -27,12 +27,12 @@ public class SocketPool extends Pool<Socket, IOException> {
 					new X509TrustManager[] { new X509TrustManager() {
 						@Override
 						public void checkClientTrusted(X509Certificate[] certs,
-								String s) {/**/
+								String s) {/* */
 						}
 
 						@Override
 						public void checkServerTrusted(X509Certificate[] certs,
-								String s) {/**/
+								String s) {/* */
 						}
 
 						@Override
@@ -83,7 +83,7 @@ public class SocketPool extends Pool<Socket, IOException> {
 	protected void destroyObject(Socket socket) {
 		try {
 			socket.close();
-		} catch (IOException e) {/**/
+		} catch (IOException e) {/* */
 		}
 	}
 }

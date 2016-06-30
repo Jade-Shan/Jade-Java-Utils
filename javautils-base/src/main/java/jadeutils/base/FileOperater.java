@@ -16,7 +16,7 @@ import org.apache.commons.io.DirectoryWalker;
 
 public class FileOperater {
 
-	/**
+	/*
 	 * 保存文件
 	 * 
 	 * @param path
@@ -39,7 +39,7 @@ public class FileOperater {
 		writeToStream(path + fileName, new FileInputStream(file));
 	}
 
-	/**
+	/*
 	 * 保存文件
 	 * 
 	 * @param path
@@ -61,7 +61,7 @@ public class FileOperater {
 		writeToStream(path + fileName, inputStream);
 	}
 
-	/**
+	/*
 	 * 写入到磁盘
 	 * 
 	 * @param fileName
@@ -89,7 +89,7 @@ public class FileOperater {
 		inputStream.close();
 	}
 
-	/**
+	/*
 	 * 删除单个文件
 	 * 
 	 * @param fileName
@@ -102,7 +102,7 @@ public class FileOperater {
 		}
 	}
 
-	/**
+	/*
 	 * 删除目录（文件夹）以及目录下的文件
 	 * 
 	 * @param dir
@@ -131,7 +131,7 @@ public class FileOperater {
 		}
 	}
 
-	/**
+	/*
 	 * 抽象出对文件操作的接口
 	 * 
 	 * @author jade
@@ -139,7 +139,7 @@ public class FileOperater {
 	 */
 	public interface FileProcesser {
 
-		/**
+		/*
 		 * 对一个文件进行一系列的操作
 		 * 
 		 * @param file
@@ -148,7 +148,7 @@ public class FileOperater {
 
 	}
 
-	/**
+	/*
 	 * 遍历目录并处理所有文件的工具
 	 * 
 	 * @author jade
@@ -182,7 +182,7 @@ public class FileOperater {
 		w.start(rootPath);
 	}
 
-	/**
+	/*
 	 * 处理所有的文件
 	 * 
 	 * @param rootPath

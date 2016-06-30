@@ -1,13 +1,13 @@
 package jadeutils.text;
 
-/**
+/*
  * 
  */
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-/**
+/*
  * @author morgan
  * 
  */
@@ -18,7 +18,7 @@ public class MessageMap {
 		this.resourceBundle = ResourceBundle.getBundle(fileName);
 	}
 
-	/**
+	/*
 	 * <p>
 	 * load from prop file
 	 * </p>
@@ -36,7 +36,7 @@ public class MessageMap {
 		return strErrorMsg;
 	}
 
-	/**
+	/*
 	 * <p>
 	 * load form prop
 	 * </p>

@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.code;
@@ -17,7 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
+/*
  * @author morgan
  * 
  */
@@ -28,14 +28,14 @@ public class BinaryCoderTest {
 	private static int intVal = 100000001;
 	private static long longVal = 1000000000001L;
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 	}
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@After

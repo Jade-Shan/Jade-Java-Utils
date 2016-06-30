@@ -13,7 +13,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ClassUtils {
-	/**
+	/*
 	 * 从包package中获取所有的Class
 	 * 
 	 * @param pack
@@ -108,7 +108,7 @@ public class ClassUtils {
 		return classes;
 	}
 
-	/**
+	/*
 	 * 以文件的形式来获取包下的所有Class
 	 * 
 	 * @param packageName

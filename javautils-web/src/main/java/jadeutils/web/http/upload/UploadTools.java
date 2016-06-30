@@ -24,7 +24,7 @@ public class UploadTools {
 	public static final String RELATIVE_PATH = "relativePath";
 	public static final String FILE_NAME = "realFileName";
 
-	/**
+	/*
 	 * 上传单个文件
 	 * 
 	 * @param req
@@ -57,7 +57,7 @@ public class UploadTools {
 				});
 	}
 
-	/**
+	/*
 	 * 上传多个文件
 	 * 
 	 * @param req
@@ -153,7 +153,7 @@ public class UploadTools {
 		}
 	}
 
-	/**
+	/*
 	 * 执行上传文件保存操作
 	 * 
 	 * @param req
@@ -187,7 +187,7 @@ public class UploadTools {
 				item.getInputStream());
 	}
 
-	/**
+	/*
 	 * 由第三提供的方法自动写入文件
 	 * 
 	 * @param item
@@ -199,7 +199,7 @@ public class UploadTools {
 		item.write(new File(path, filename));
 	}
 
-	/**
+	/*
 	 * 生成相对地址
 	 * 
 	 * @param funcName
@@ -217,7 +217,7 @@ public class UploadTools {
 		return sb.toString();
 	}
 
-	/**
+	/*
 	 * 取得上传的文件名
 	 * 
 	 * @return
