@@ -35,6 +35,12 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- remove after update jade-java-libs -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
 				<artifactId>javautils-base</artifactId>
