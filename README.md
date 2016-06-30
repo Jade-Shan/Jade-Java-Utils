@@ -1,7 +1,7 @@
 Jade-Java-utils
 ===============
 
-[![build status](https://api.travis-ci.org/Jade-Shan/Jade-Java-Libs.svg)](https://travis-ci.org/Jade-Shan/Jade-Java-Libs)
+[![build status](https://travis-ci.org/Jade-Shan/Jade-Java-Utils.svg)](https://travis-ci.org/Jade-Shan/Jade-Java-Utils)
 [![codecov.io](https://codecov.io/github/Jade-Shan/Jade-Java-utils/coverage.svg?branch=master)](https://codecov.io/github/Jade-Shan/Jade-Java-utils?branch=master)
 
 
@@ -9,6 +9,10 @@ Java utils
 
 update log
 ===============
+
+## v0.1.18
+
+* fix readme file
 
 ## v0.1.16
 
