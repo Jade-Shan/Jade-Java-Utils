@@ -1,11 +1,11 @@
-/**
+/*
  * 
  */
 package jadeutils.dao;
 
 import jadeutils.text.MessageMap;
 
-/**
+/*
  * @author morgan
  * 
  */
@@ -24,7 +24,7 @@ public class JadeDaoException extends RuntimeException {
 	/* 换行符 */
 	private static final String CRLF = System.getProperty("line.separator");
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法
 	 * </p>
@@ -33,7 +33,7 @@ public class JadeDaoException extends RuntimeException {
 		super();
 	}
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法。
 	 * </p>
@@ -45,7 +45,7 @@ public class JadeDaoException extends RuntimeException {
 		super(e);
 	}
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法
 	 * </p>
@@ -59,7 +59,7 @@ public class JadeDaoException extends RuntimeException {
 		this.msgKey = msgKey;
 	}
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法。
 	 * </p>
@@ -75,7 +75,7 @@ public class JadeDaoException extends RuntimeException {
 		this.msgKey = msgKey;
 	}
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法。
 	 * </p>
@@ -93,7 +93,7 @@ public class JadeDaoException extends RuntimeException {
 		this.source = e;
 	}
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法。
 	 * </p>
@@ -113,7 +113,7 @@ public class JadeDaoException extends RuntimeException {
 		this.source = e;
 	}
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法。
 	 * </p>
@@ -133,7 +133,7 @@ public class JadeDaoException extends RuntimeException {
 		this.source = e;
 	}
 
-	/**
+	/*
 	 * <p>
 	 * 异常类构造方法。
 	 * </p>

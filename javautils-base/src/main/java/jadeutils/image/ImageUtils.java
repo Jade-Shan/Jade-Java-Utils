@@ -23,13 +23,13 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
-/**
+/*
  * 
  * @author SHAN013
  * 
  */
 public class ImageUtils {
-	/**
+	/*
 	 * 几种常见的图片格式
 	 */
 	public static String IMAGE_TYPE_GIF = "gif";// 图形交换格式
@@ -38,14 +38,14 @@ public class ImageUtils {
 	public static String IMAGE_TYPE_PNG = "png";// 可移植网络图形
 	public static String IMAGE_TYPE_PSD = "psd";// Photoshop的专用格式Photoshop
 
-	/**
+	/*
 	 * 按一定规则生成多个输出流的接口
 	 * 
 	 * @author SHAN013
 	 * 
 	 */
 	public interface MutiOutputStreamGenerater {
-		/**
+		/*
 		 * 生成一个新的输出流
 		 * 
 		 * @param prefix
@@ -56,7 +56,7 @@ public class ImageUtils {
 				throws FileNotFoundException;
 	};
 
-	/**
+	/*
 	 * 图像类型转换：GIF->JPG、GIF->PNG、PNG->JPG、PNG->GIF(X)、BMP->PNG
 	 * 
 	 * @param srcFileName
@@ -76,7 +76,7 @@ public class ImageUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 彩色转为黑白
 	 * 
 	 * @param srcImg
@@ -94,7 +94,7 @@ public class ImageUtils {
 		ImageIO.write(src, IMAGE_TYPE_JPEG, destImg);
 	}
 
-	/**
+	/*
 	 * 缩放图像（按比例缩放）
 	 * 
 	 * @param srcImg
@@ -121,7 +121,7 @@ public class ImageUtils {
 		ImageIO.write(tag, IMAGE_TYPE_JPEG, destImg);// 输出到文件流
 	}
 
-	/**
+	/*
 	 * 缩放图像（按高度和宽度缩放）
 	 * 
 	 * @param srcImg
@@ -167,7 +167,7 @@ public class ImageUtils {
 		ImageIO.write((BufferedImage) itemp, IMAGE_TYPE_JPEG, destImg);
 	}
 
-	/**
+	/*
 	 * 根据原始图像与目标图像的大小来算出缩放比例
 	 * 
 	 * @return 对应的比例
@@ -179,7 +179,7 @@ public class ImageUtils {
 		return widthRatio > heightRatio ? heightRatio : widthRatio;
 	}
 
-	/**
+	/*
 	 * 图像切割(按指定起点坐标和宽高切割)
 	 * 
 	 * @param srcImg
@@ -220,7 +220,7 @@ public class ImageUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 给图片添加文字水印
 	 * 
 	 * @param srcImg
@@ -267,7 +267,7 @@ public class ImageUtils {
 		ImageIO.write((BufferedImage) image, IMAGE_TYPE_JPEG, destImg);// 输出到文件流
 	}
 
-	/**
+	/*
 	 * 给图片添加图片水印
 	 * 
 	 * @param srcImg
@@ -310,7 +310,7 @@ public class ImageUtils {
 				destFileName));
 	}
 
-	/**
+	/*
 	 * 给图片添加文字水印
 	 * 
 	 * @param srcFileName
@@ -362,7 +362,7 @@ public class ImageUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 图像切割（指定切片的行数和列数）
 	 * 
 	 * @param srcImg
@@ -441,7 +441,7 @@ public class ImageUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 图像切割（指定切片的宽度和高度）
 	 * 
 	 * @param srcImg
@@ -521,7 +521,7 @@ public class ImageUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 计算text的长度（一个中文算两个字符）
 	 * 
 	 * @param text

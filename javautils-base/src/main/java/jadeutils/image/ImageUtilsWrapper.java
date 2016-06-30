@@ -11,7 +11,7 @@ import java.io.OutputStream;
 
 public class ImageUtilsWrapper {
 
-	/**
+	/*
 	 * 缩放图像（按比例缩放）
 	 * 
 	 * @param srcFileName
@@ -46,7 +46,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 缩放图像（按高度和宽度缩放）
 	 * 
 	 * @param srcFileName
@@ -85,7 +85,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 图像切割(按指定起点坐标和宽高切割)
 	 * 
 	 * @param srcFileName
@@ -126,7 +126,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 图像切割（指定切片的行数和列数）
 	 * 
 	 * @param srcFileName
@@ -165,7 +165,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 图像切割（指定切片的行数和列数）
 	 * 
 	 * @param srcFileName
@@ -204,7 +204,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 彩色转为黑白
 	 * 
 	 * @param srcFileName
@@ -237,7 +237,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 图像类型转换：GIF->JPG、GIF->PNG、PNG->JPG、PNG->GIF(X)、BMP->PNG
 	 * 
 	 * @param srcFileName
@@ -272,7 +272,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 给图片添加文字水印
 	 * 
 	 * @param srcFileName
@@ -324,7 +324,7 @@ public class ImageUtilsWrapper {
 		}
 	}
 
-	/**
+	/*
 	 * 给图片添加图片水印
 	 * 
 	 * @param srcFileName

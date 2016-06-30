@@ -46,7 +46,7 @@ public class ShellUtil {
 		return result;
 	}
 
-	/**
+	/*
 	 * 执行bash脚本
 	 * 
 	 * @param script
@@ -66,7 +66,7 @@ public class ShellUtil {
 		return callSystem(new String[] { "/bin/bash", "-c", script }, envp, dir);
 	}
 
-	/**
+	/*
 	 * 执行bash脚本并弹出窗口
 	 * 
 	 * @param script
@@ -90,7 +90,7 @@ public class ShellUtil {
 				dir);
 	}
 
-	/**
+	/*
 	 * 执行windows cmd脚本
 	 * 
 	 * @param script
@@ -110,7 +110,7 @@ public class ShellUtil {
 		return callSystem(new String[] { "cmd", "/C", script }, envp, dir);
 	}
 
-	/**
+	/*
 	 * 执行windows cmd脚本，并弹出窗口
 	 * 
 	 * @param script
@@ -131,7 +131,7 @@ public class ShellUtil {
 				envp, dir);
 	}
 
-	/**
+	/*
 	 * 以当前系统编码把输入流转为文本
 	 * 
 	 * @param inStream
@@ -143,7 +143,7 @@ public class ShellUtil {
 		return transInStream2String(inStream, charset);
 	}
 
-	/**
+	/*
 	 * 按指定编码把输入流转为文本
 	 * 
 	 * @param inStream
@@ -165,7 +165,7 @@ public class ShellUtil {
 		return result;
 	}
 
-	/**
+	/*
 	 * 定义如何把标准输出和标准错误转为客户需要的结果。</br> 因为输出流不读取完可能会阻塞系统调用。所以对输出流的处理操作要在系统调用返回前先完成。
 	 * 
 	 * @author qwshan
@@ -173,7 +173,7 @@ public class ShellUtil {
 	 */
 	public interface StreamHandler {
 
-		/**
+		/*
 		 * 处理输出流
 		 * 
 		 * @param stdout
@@ -182,7 +182,7 @@ public class ShellUtil {
 		public Object trans(InputStream stream);
 	};
 
-	/**
+	/*
 	 * 即时地把标准
 	 * 
 	 * @author qwshan
@@ -212,7 +212,7 @@ public class ShellUtil {
 
 	}
 
-	/**
+	/*
 	 * 返回结果
 	 * 
 	 * @author qwshan

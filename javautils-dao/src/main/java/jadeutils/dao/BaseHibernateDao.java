@@ -37,7 +37,7 @@ public abstract class BaseHibernateDao<T> implements BaseDao<T> {
 		entryClass = (Class) params[0];
 	}
 
-	/**
+	/*
 	 * 格式化异常信息
 	 * 
 	 * @param e
@@ -166,7 +166,7 @@ public abstract class BaseHibernateDao<T> implements BaseDao<T> {
 		return this.findByHql(fields + hql, conditions, dto);
 	}
 
-	/**
+	/*
 	 * 在分页查询前取得结果的总数
 	 * 
 	 * @param hql
@@ -192,7 +192,7 @@ public abstract class BaseHibernateDao<T> implements BaseDao<T> {
 		return result;
 	}
 
-	/**
+	/*
 	 * 根据分页大小查询
 	 * 
 	 * @param hql

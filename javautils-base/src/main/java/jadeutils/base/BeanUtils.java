@@ -18,7 +18,7 @@ public class BeanUtils {
 		return bean.getClass().getDeclaredMethod(getterName).invoke(bean);
 	}
 
-	/**
+	/*
 	 * 
 	 * @param srcBean
 	 * @param tagBean
@@ -38,7 +38,7 @@ public class BeanUtils {
 		setter.invoke(tagBean, getter.invoke(srcBean));
 	}
 
-	/**
+	/*
 	 * Copy bean object
 	 * 
 	 * @param srcBean
@@ -53,7 +53,7 @@ public class BeanUtils {
 		}
 	}
 
-	/**
+	/*
 	 * Copy bean object
 	 * 
 	 * @param srcBean

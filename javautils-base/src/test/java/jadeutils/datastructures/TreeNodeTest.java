@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.datastructures;
@@ -13,7 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
+/*
  * @author morgan
  * 
  */
@@ -30,7 +30,7 @@ public class TreeNodeTest {
 		return c;
 	}
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@Before
@@ -54,7 +54,7 @@ public class TreeNodeTest {
 		}
 	}
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@After

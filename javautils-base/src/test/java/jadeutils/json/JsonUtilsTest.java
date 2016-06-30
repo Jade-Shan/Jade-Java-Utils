@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.json;
@@ -11,21 +11,21 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
+/*
  * @author SHAN013
  * 
  */
 public class JsonUtilsTest {
 	private static JsonUtils util = JsonUtils.newInstance();
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 	}
 
-	/**
+	/*
 	 * @throws java.lang.Exception
 	 */
 	@After
@@ -43,7 +43,7 @@ public class JsonUtilsTest {
 		System.out.println(util.toJson(a));
 	}
 
-	/**
+	/*
 	 * 格式化json字符串
 	 * 
 	 * @param json
@@ -183,7 +183,7 @@ public class JsonUtilsTest {
 		return buf.toString();
 	}
 
-	/**
+	/*
 	 * 生成行
 	 * 
 	 * @param buf

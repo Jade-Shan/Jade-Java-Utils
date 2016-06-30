@@ -34,7 +34,7 @@ public class DDNSService {
 	private HashMap<String, Record[]> nsRecords = new HashMap<>();
 	private HashMap<String, Record[]> mxRecords = new HashMap<>();
 
-	/**
+	/*
 	 * 把IP地址从字符串转为byte数组。
 	 * 
 	 * @param ipStr
@@ -53,7 +53,7 @@ public class DDNSService {
 		return ip;
 	}
 
-	/**
+	/*
 	 * 把所有主机名统一成以`.`结尾 的绝对主机名
 	 * 
 	 * @param hostName
@@ -64,7 +64,7 @@ public class DDNSService {
 				.toLowerCase();
 	}
 
-	/**
+	/*
 	 * 把新的主机名：IP映射添加到集合中去。
 	 * 
 	 * @param hostName
@@ -81,7 +81,7 @@ public class DDNSService {
 		}
 	}
 
-	/**
+	/*
 	 * 合建 一条解析 记录
 	 * 
 	 * @param hostName
@@ -115,7 +115,7 @@ public class DDNSService {
 		return rec;
 	}
 
-	/**
+	/*
 	 * 输出数据包的内容
 	 * 
 	 * @param packet
@@ -209,7 +209,7 @@ public class DDNSService {
 		return response;
 	}
 
-	/**
+	/*
 	 * 在指定端口启动域名解析服务
 	 * 
 	 * @param port
@@ -269,7 +269,7 @@ public class DDNSService {
 					}
 					try {
 						Thread.sleep(16);
-					} catch (InterruptedException ee) {/**/
+					} catch (InterruptedException ee) {/* */
 					}
 					continue;
 				}

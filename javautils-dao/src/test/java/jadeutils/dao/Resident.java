@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.dao;
@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
+/*
  * @author morgan
  * 
  */
@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "resident")
 public class Resident implements Serializable {
 
-	/**
+	/*
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public class Resident implements Serializable {
 	private String status;
 	private Date createTime;
 
-	/**
+	/*
 	 * 
 	 */
 	public Resident() {

@@ -1,7 +1,7 @@
 package jadeutils.cache;
 
 public interface BaseCache<T> {
-	/**
+	/*
 	 * 创建实例
 	 * 
 	 * @return 配置完成的实例
@@ -11,14 +11,14 @@ public interface BaseCache<T> {
 
 	public void shutdown();
 
-	/**
+	/*
 	 * 取得实现类
 	 * 
 	 * @return 取得实现类
 	 */
 	public String getImplTypeName();
 
-	/**
+	/*
 	 * 取得缓存记录
 	 * 
 	 * @param key
@@ -27,7 +27,7 @@ public interface BaseCache<T> {
 	 */
 	public Object get(String key);
 
-	/**
+	/*
 	 * 保存缓存记录
 	 * 
 	 * @param key
@@ -37,7 +37,7 @@ public interface BaseCache<T> {
 	 */
 	public void set(String key, T value);
 
-	/**
+	/*
 	 * 保存缓存记录
 	 * 
 	 * @param key
@@ -49,7 +49,7 @@ public interface BaseCache<T> {
 	 */
 	public void set(String key, T value, int expire);
 
-	/**
+	/*
 	 * 删除缓存记录
 	 * 
 	 * @param key

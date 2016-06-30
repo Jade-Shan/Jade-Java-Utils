@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class DateCaculater {
 
-	/**
+	/*
 	 * 取得两个时间段的时间间隔 return t2 与t1的间隔天数 throws ParseException
 	 * 如果输入的日期格式不是0000-00-00 格式抛出异常
 	 */

@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.datastructures;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class TreeNodeHelper<K, T> {
 
-	/**
+	/*
 	 * make list to a tree
 	 * 
 	 * @param root

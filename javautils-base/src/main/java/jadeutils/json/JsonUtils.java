@@ -22,28 +22,28 @@ public class JsonUtils {
 						false);
 	}
 
-	/**
+	/*
 	 * 创建只输出初始值被改变的属性到Json字符串的Binder.
 	 */
 	public static JsonUtils newInstance() {
 		return new JsonUtils(Inclusion.NON_DEFAULT);
 	}
 
-	/**
+	/*
 	 * 创建输出全部属性到Json字符串的Binder.
 	 */
 	public static JsonUtils newInstanceAlways() {
 		return new JsonUtils(Inclusion.ALWAYS);
 	}
 
-	/**
+	/*
 	 * 创建只输出非空属性到Json字符串的Binder.
 	 */
 	public static JsonUtils newInstanceNonNull() {
 		return new JsonUtils(Inclusion.NON_NULL);
 	}
 
-	/**
+	/*
 	 * 如果JSON字符串为Null或"null"字符串,返回Null. 如果JSON字符串为"[]",返回空集合.
 	 * 
 	 * 如需读取集合如List/Map,且不是List<String>这种简单类型时使用如下语句: List<MyBean> beanList =
@@ -63,7 +63,7 @@ public class JsonUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 如果对象为Null,返回"null". 如果集合为空集合,返回"[]".
 	 */
 	public String toJson(Object object) {
@@ -76,7 +76,7 @@ public class JsonUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 设置转换日期类型的format pattern,如果不设置默认打印Timestamp毫秒数.
 	 */
 	public void setDateFormat(String pattern) {
@@ -87,14 +87,14 @@ public class JsonUtils {
 		}
 	}
 
-	/**
+	/*
 	 * 取出Mapper做进一步的设置或使用其他序列化API.
 	 */
 	public ObjectMapper getMapper() {
 		return mapper;
 	}
 
-	/**
+	/*
 	 * 格式化json字符串
 	 * 
 	 * @param json
@@ -234,7 +234,7 @@ public class JsonUtils {
 		return buf.toString();
 	}
 
-	/**
+	/*
 	 * 生成行
 	 * 
 	 * @param buf

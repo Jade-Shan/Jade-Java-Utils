@@ -1,11 +1,11 @@
-/**
+/*
  * 
  */
 package jadeutils.dao;
 
 import java.util.List;
 
-/**
+/*
  * @author morgan
  * 
  */

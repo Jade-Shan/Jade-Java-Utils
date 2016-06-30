@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-/**
+/*
  * A queue of bytes where a sequence of bytes can be
  * added (into the tail) or retrieved (from the head).
  */
@@ -14,7 +14,7 @@ public class ByteArrayQueue implements Cloneable {
 	private int offset = 0;
 	private int length = 0;
 
-	/** Creates a new ByteArrayQueue that shares this ByteArrayQueue's content. */ 
+	/* Creates a new ByteArrayQueue that shares this ByteArrayQueue's content. */ 
 	@Override
 	public ByteArrayQueue clone() {
 		return new ByteArrayQueue(array, offset, length);
@@ -26,17 +26,17 @@ public class ByteArrayQueue implements Cloneable {
 		this.length = length;
 	}
 
-	/** Creates a ByteArrayQueue with the initial capacity of 32 bytes. */
+	/* Creates a ByteArrayQueue with the initial capacity of 32 bytes. */
 	public ByteArrayQueue() {
 		this(32);
 	}
 
-	/** Creates a ByteArrayQueue with the initial capacity of the given bytes. */
+	/* Creates a ByteArrayQueue with the initial capacity of the given bytes. */
 	public ByteArrayQueue(int capacity) {
 		array = new byte[capacity];
 	}
 
-	/**
+	/*
 	 * @return The array which the bytes in the queue are stored.
 	 * @see #offset()
 	 * @see #length()
@@ -45,7 +45,7 @@ public class ByteArrayQueue implements Cloneable {
 		return array;
 	}
 
-	/**
+	/*
 	 * @return The index of the array at the head of the queue.
 	 * @see #array()
 	 * @see #length()
@@ -54,7 +54,7 @@ public class ByteArrayQueue implements Cloneable {
 		return offset;
 	}
 
-	/**
+	/*
 	 * @return The total number of available bytes in the queue.
 	 * @see #array()
 	 * @see #length()
@@ -63,7 +63,7 @@ public class ByteArrayQueue implements Cloneable {
 		return length;
 	}
 
-	/** Clears the queue. */
+	/* Clears the queue. */
 	public void clear() {
 		offset = 0;
 		length = 0;
@@ -73,7 +73,7 @@ public class ByteArrayQueue implements Cloneable {
 		}
 	}
 
-	/** @param capacity - New capacity. */
+	/* @param capacity - New capacity. */
 	public void setCapacity(int capacity) {
 		byte[] newArray = new byte[Math.max(capacity, length)];
 		System.arraycopy(array, offset, newArray, 0, length);
@@ -81,7 +81,7 @@ public class ByteArrayQueue implements Cloneable {
 		offset = 0;
 	}
 
-	/**
+	/*
 	 * Adds a sequence of bytes into the tail of the queue,
 	 * equivalent to <code>add(b, 0, b.length).</code>
 	 */
@@ -89,7 +89,7 @@ public class ByteArrayQueue implements Cloneable {
 		return add(b, 0, b.length);
 	}
 
-	/** Adds a sequence of bytes into the tail of the queue. */
+	/* Adds a sequence of bytes into the tail of the queue. */
 	public ByteArrayQueue add(byte[] b, int off, int len) {
 		int newLength = length + len;
 		if (newLength > array.length) {
@@ -103,7 +103,7 @@ public class ByteArrayQueue implements Cloneable {
 		return this;
 	}
 
-	/**
+	/*
 	 * @return An {@link java.io.OutputStream} suitable for writing binary data
 	 *         into the tail of the queue.
 	 * @see #add(byte[])
@@ -123,7 +123,7 @@ public class ByteArrayQueue implements Cloneable {
 		};
 	}
 
-	/**
+	/*
 	 * Retrieves a sequence of bytes from the head of the queue,
 	 * equivalent to <code>remove(b, 0, b.length).</code>
 	 */
@@ -131,13 +131,13 @@ public class ByteArrayQueue implements Cloneable {
 		return remove(b, 0, b.length);
 	}
 
-	/** Retrieves a sequence of bytes from the head of the queue. */
+	/* Retrieves a sequence of bytes from the head of the queue. */
 	public ByteArrayQueue remove(byte[] b, int off, int len) {
 		System.arraycopy(array, offset, b, off, len);
 		return remove(len);
 	}
 
-	/** Removes a sequence of bytes from the head of the queue. */
+	/* Removes a sequence of bytes from the head of the queue. */
 	public ByteArrayQueue remove(int len) {
 		offset += len;
 		length -= len;
@@ -149,7 +149,7 @@ public class ByteArrayQueue implements Cloneable {
 		return this;
 	}
 
-	/**
+	/*
 	 * @return An {@link java.io.InputStream} suitable for reading binary data
 	 *         from the head of the queue.
 	 * @see #remove(byte[])
@@ -183,7 +183,7 @@ public class ByteArrayQueue implements Cloneable {
 		};
 	}
 
-	/**
+	/*
 	 * Converts the queue's contents into a string decoding bytes using
 	 * the platform's default character set.
 	 *
@@ -194,7 +194,7 @@ public class ByteArrayQueue implements Cloneable {
 		return new String(array, offset, length);
 	}
 
-	/**
+	/*
 	 * Converts the queue's contents into a string by decoding the bytes using
 	 * the specified {@link java.nio.charset.Charset charset}
 	 *
@@ -205,7 +205,7 @@ public class ByteArrayQueue implements Cloneable {
 		return new String(array, offset, length, charset);
 	}
 
-	/**
+	/*
 	 * Converts the queue's contents into a string by decoding the bytes using
 	 * the specified {@link java.nio.charset.Charset charsetName}
 	 *

@@ -14,7 +14,7 @@ public class TextTempletRanderTool {
 	private static final Pattern TAKER_PATTERN = Pattern
 			.compile("\\$\\{([0-9a-zA-Z]+\\.?)+\\}");
 
-	/**
+	/*
 	 * 渲染一个模板，把<code>${env.key}</code>格式的占位内容替换成传入的值。
 	 * 
 	 * @param templet
@@ -41,7 +41,7 @@ public class TextTempletRanderTool {
 		return result;
 	}
 
-	/**
+	/*
 	 * 检查模板中还没有被替换的占位符
 	 * 
 	 * @param template

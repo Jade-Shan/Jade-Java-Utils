@@ -5,7 +5,7 @@ public class MapUtils {
 	public static final double RADIUS_EARTH = 6378100.00;
 	public static final double PI_DEG = Math.PI / 180;
 
-	/**
+	/*
 	 * 根据两个坐标取得 使用的公式：
 	 * 
 	 * @param startLat
@@ -30,7 +30,7 @@ public class MapUtils {
 				* MapUtils.RADIUS_EARTH;
 	}
 
-	/**
+	/*
 	 * 取得纬度角度的距离
 	 * 
 	 * @param latitudeAngle
@@ -41,7 +41,7 @@ public class MapUtils {
 		return latitudeAngle * 111000;
 	}
 
-	/**
+	/*
 	 * 纬度距离的角度
 	 * 
 	 * @param distance
@@ -52,7 +52,7 @@ public class MapUtils {
 		return distance / 111000;
 	}
 
-	/**
+	/*
 	 * 取得指定纬度下，指定经度的地面距离
 	 * 
 	 * @param longtitudeAngle
@@ -73,7 +73,7 @@ public class MapUtils {
 		// longtitudeAngle);
 	}
 
-	/**
+	/*
 	 * 经度距离的角度
 	 * 
 	 * @param distance

@@ -1,11 +1,11 @@
-/**
+/*
  * 
  */
 package jadeutils.reflect;
 
 import java.lang.reflect.Method;
 
-/**
+/*
  * @author qwshan
  * 
  */

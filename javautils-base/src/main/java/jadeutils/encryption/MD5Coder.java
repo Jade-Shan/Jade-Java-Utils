@@ -18,7 +18,7 @@ public class MD5Coder {
 	private final static String[] MD5hexDigits = { "0", "1", "2", "3", "4",
 			"5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 
-	/**
+	/*
 	 * 取得单个字节的16进制显示
 	 * 
 	 * @param b
@@ -33,7 +33,7 @@ public class MD5Coder {
 		return MD5hexDigits[d1] + MD5hexDigits[d2];
 	}
 
-	/**
+	/*
 	 * 以16进制显示字节流
 	 * 
 	 * @param b
@@ -58,7 +58,7 @@ public class MD5Coder {
 		return result;
 	}
 
-	/**
+	/*
 	 * 获取MD5加密后的小写字符串
 	 * 
 	 * @param content
@@ -90,7 +90,7 @@ public class MD5Coder {
 			'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
 			'W', 'X', 'Y', 'Z', '$', '@' };
 
-	/**
+	/*
 	 * 获取MD5的64进制表示码
 	 * 
 	 * @param content
@@ -125,7 +125,7 @@ public class MD5Coder {
 		return getCode64(h, l);
 	}
 
-	/**
+	/*
 	 * 获取MD5的16进制表示码
 	 * 
 	 * @param content

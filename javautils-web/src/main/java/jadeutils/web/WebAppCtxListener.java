@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.web;
@@ -8,7 +8,7 @@ import javax.servlet.ServletContextEvent;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-/**
+/*
  * @author morgan
  * 
  */

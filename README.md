@@ -10,5 +10,17 @@ Java utils
 update log
 ===============
 
-* v0.1.9 fix mongo db query condition error
-* v0.16 split dao and mongodb
+## v0.1.15
+
+* fix javadoc comment format error
+* add sonatype center repo config
+
+## v0.1.9 
+
+* fix mongo db query condition error
+
+
+
+## v0.16 
+
+* split dao and mongodb

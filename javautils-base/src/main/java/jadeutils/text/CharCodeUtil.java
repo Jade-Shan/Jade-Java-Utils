@@ -11,7 +11,7 @@ import org.apache.commons.io.FileUtils;
 
 public class CharCodeUtil {
 
-	/**
+	/*
 	 * 清除一个目录下所有文件的BOM信息
 	 * 
 	 * @param rootPath

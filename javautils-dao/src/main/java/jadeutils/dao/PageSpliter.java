@@ -1,4 +1,4 @@
-/**
+/*
  * 
  */
 package jadeutils.dao;
@@ -6,13 +6,13 @@ package jadeutils.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * @author morgan
  * 
  */
 public class PageSpliter {
 
-	/**
+	/*
 	 * 计算机当前页的偏移量
 	 * 
 	 * @param currentPageNo
@@ -28,7 +28,7 @@ public class PageSpliter {
 		return (currentPageNo - 1) * pageSize;
 	}
 
-	/**
+	/*
 	 * 计算记录要分成几页
 	 * 
 	 * @param recNumber
@@ -44,7 +44,7 @@ public class PageSpliter {
 		return (recNumber + pageSize - 1) / pageSize;
 	}
 
-	/**
+	/*
 	 * 列出当前页面号之前的页号列表
 	 * 
 	 * @param currentPageNo
@@ -62,7 +62,7 @@ public class PageSpliter {
 		return l;
 	}
 
-	/**
+	/*
 	 * 列出当前页面号之后的页号列表
 	 * 
 	 * @param currentPageNo
@@ -80,7 +80,7 @@ public class PageSpliter {
 		return l;
 	}
 
-	/**
+	/*
 	 * 根据页码（dto.getCurrPageNo()）、
 	 * <p>
 	 * 总记录数（dto .getCountRecNumber()）、

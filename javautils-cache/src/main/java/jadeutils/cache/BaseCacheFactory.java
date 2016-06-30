@@ -1,15 +1,15 @@
-/**
+/*
  * 
  */
 package jadeutils.cache;
 
-/**
+/*
  * @author morgan
  * 
  */
 public class BaseCacheFactory<T> {
 
-	/**
+	/*
 	 * 取得配置完成的缓存实例
 	 * 
 	 * @param cacheClass
@@ -23,7 +23,7 @@ public class BaseCacheFactory<T> {
 		return cache.createInstance();
 	}
 
-	/**
+	/*
 	 * 取得配置完成的缓存实例
 	 * 
 	 * @param cacheClassName
