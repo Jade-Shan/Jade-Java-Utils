@@ -1,7 +1,7 @@
 Jade-Java-utils
 ===============
 
-![build status](https://travis-ci.org/Jade-Shan/Jade-Java-utils.svg)
+[![build status](https://api.travis-ci.org/Jade-Shan/Jade-Java-Libs.svg)](https://travis-ci.org/Jade-Shan/Jade-Java-Libs)
 [![codecov.io](https://codecov.io/github/Jade-Shan/Jade-Java-utils/coverage.svg?branch=master)](https://codecov.io/github/Jade-Shan/Jade-Java-utils?branch=master)
 
 
