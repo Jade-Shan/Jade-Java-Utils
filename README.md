@@ -10,6 +10,10 @@ Java utils
 update log
 ===============
 
+## v0.1.16
+
+* remove test case
+
 ## v0.1.15
 
 * fix javadoc comment format error

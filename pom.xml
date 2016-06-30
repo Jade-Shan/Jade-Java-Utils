@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadelibs-java</artifactId>
-		<version>1.0.8</version>
+		<version>1.0.9</version>
 	</parent>
 
 	<artifactId>javautils</artifactId>
-	<version>0.1.15</version>
+	<version>0.1.16</version>
 	<packaging>pom</packaging>
 	<name>jade utils parent</name>
 
@@ -24,23 +24,18 @@
 	</modules>
 
 	<properties>
-		<javautils-base.version>0.1.15</javautils-base.version>
-		<javautils-cache.version>0.1.15</javautils-cache.version>
-		<javautils-dao.version>0.1.15</javautils-dao.version>
-		<javautils-mongo.version>0.1.15</javautils-mongo.version>
-		<javautils-web.version>0.1.15</javautils-web.version>
-		<javautils-sandtable.version>0.1.15</javautils-sandtable.version>
-		<javautils-cdn.version>0.1.15</javautils-cdn.version>
+		<javautils-base.version>0.1.16</javautils-base.version>
+		<javautils-cache.version>0.1.16</javautils-cache.version>
+		<javautils-dao.version>0.1.16</javautils-dao.version>
+		<javautils-mongo.version>0.1.16</javautils-mongo.version>
+		<javautils-web.version>0.1.16</javautils-web.version>
+		<javautils-sandtable.version>0.1.16</javautils-sandtable.version>
+		<javautils-cdn.version>0.1.16</javautils-cdn.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
 			<!-- remove after update jade-java-libs -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
 				<artifactId>javautils-base</artifactId>
