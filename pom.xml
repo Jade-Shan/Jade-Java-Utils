@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>jadelibs-java</artifactId>
-		<version>1.0.8</version>
+		<version>1.0.9</version>
 	</parent>
 
 	<artifactId>javautils</artifactId>
@@ -35,6 +35,7 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- remove after update jade-java-libs -->
 			<dependency>
 				<groupId>net.jade-dungeon</groupId>
 				<artifactId>javautils-base</artifactId>
