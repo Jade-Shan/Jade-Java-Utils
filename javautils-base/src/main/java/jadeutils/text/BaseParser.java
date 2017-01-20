@@ -64,11 +64,11 @@ public abstract class BaseParser implements Parser {
 				c = str.charAt(i);
 				if (null != strOpen) {
 					if ('\\' == p) {
-						if (isStringClose(strOpen, c) || isStringOpen(c)) {
-							sb.append(p).append(c);
-						} else {
+//						if (isStringClose(strOpen, c) || isStringOpen(c)) {
+//							sb.append(p).append(c);
+//						} else {
 							sb.append(c);
-						}
+//						}
 					} else if (isStringClose(strOpen, c)) {
 						strOpen = null;
 						this.pushBuffer();
