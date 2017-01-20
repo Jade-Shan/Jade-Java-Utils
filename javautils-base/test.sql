@@ -1,0 +1,1 @@
+INSERT INTO `dbname`.`tablename name` VALUES (111, '22222', '{"key1":"value is \'1\'","key2":"value is \'2\'"}','20140574');
