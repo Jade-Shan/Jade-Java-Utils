@@ -33,7 +33,8 @@ public class ShellUtil {
 	}
 
 	private SysExecResult callSystem(String[] script, String[] envp, File dir)
-			throws IOException, InterruptedException {
+			throws IOException, InterruptedException //
+	{
 		SysExecResult result = new SysExecResult();
 		Process ps = Runtime.getRuntime().exec(script, envp, dir);
 		/* 警告！！！ */
@@ -49,19 +50,21 @@ public class ShellUtil {
 	/*
 	 * 执行bash脚本
 	 * 
-	 * @param script
-	 *            脚本
-	 * @param envp
-	 *            环境变量
-	 * @param dir
-	 *            路径
+	 * @param script 脚本
+	 * 
+	 * @param envp 环境变量
+	 * 
+	 * @param dir 路径
+	 * 
 	 * @return 输出流
 	 * 
 	 * @throws IOException
+	 * 
 	 * @throws InterruptedException
 	 */
 	public SysExecResult runBashScript(String script, String[] envp, File dir)
-			throws IOException, InterruptedException {
+			throws IOException, InterruptedException //
+	{
 		// 注:如果sh中含有awk,一定要按new String[]{"/bin/sh","-c",shStr}写,才可以获得流
 		return callSystem(new String[] { "/bin/bash", "-c", script }, envp, dir);
 	}
@@ -69,20 +72,22 @@ public class ShellUtil {
 	/*
 	 * 执行bash脚本并弹出窗口
 	 * 
-	 * @param script
-	 *            脚本
-	 * @param envp
-	 *            环境变量
-	 * @param dir
-	 *            路径
+	 * @param script 脚本
+	 * 
+	 * @param envp 环境变量
+	 * 
+	 * @param dir 路径
+	 * 
 	 * @return 输出流
 	 * 
 	 * @throws IOException
+	 * 
 	 * @throws InterruptedException
 	 */
 	public SysExecResult runBashScriptPopWin(String script, String[] envp,
 			File dir, String termParam) throws IOException,
-			InterruptedException {
+			InterruptedException //
+	{
 		termParam = termParam == null ? "xterm -e " : termParam;
 		// 注:如果sh中含有awk,一定要按new String[]{"/bin/sh","-c",shStr}写,才可以获得流
 		return callSystem(
@@ -93,19 +98,21 @@ public class ShellUtil {
 	/*
 	 * 执行windows cmd脚本
 	 * 
-	 * @param script
-	 *            脚本
-	 * @param envp
-	 *            环境变量
-	 * @param dir
-	 *            路径
+	 * @param script 脚本
+	 * 
+	 * @param envp 环境变量
+	 * 
+	 * @param dir 路径
+	 * 
 	 * @return 输出流
 	 * 
 	 * @throws IOException
+	 * 
 	 * @throws InterruptedException
 	 */
 	public SysExecResult runWinCmd(String script, String[] envp, File dir)
-			throws IOException, InterruptedException {
+			throws IOException, InterruptedException //
+	{
 		// 注:如果sh中含有awk,一定要按new String[]{"/bin/sh","-c",shStr}写,才可以获得流
 		return callSystem(new String[] { "cmd", "/C", script }, envp, dir);
 	}
@@ -113,19 +120,21 @@ public class ShellUtil {
 	/*
 	 * 执行windows cmd脚本，并弹出窗口
 	 * 
-	 * @param script
-	 *            脚本
-	 * @param envp
-	 *            环境变量
-	 * @param dir
-	 *            路径
+	 * @param script 脚本
+	 * 
+	 * @param envp 环境变量
+	 * 
+	 * @param dir 路径
+	 * 
 	 * @return 输出流
 	 * 
 	 * @throws IOException
+	 * 
 	 * @throws InterruptedException
 	 */
 	public SysExecResult runWinCmdPopWin(String script, String[] envp, File dir)
-			throws IOException, InterruptedException {
+			throws IOException, InterruptedException //
+	{
 		// 注:如果sh中含有awk,一定要按new String[]{"/bin/sh","-c",shStr}写,才可以获得流
 		return callSystem(new String[] { "cmd", "/C", "start " + script },
 				envp, dir);
@@ -135,7 +144,9 @@ public class ShellUtil {
 	 * 以当前系统编码把输入流转为文本
 	 * 
 	 * @param inStream
+	 * 
 	 * @return
+	 * 
 	 * @throws IOException
 	 */
 	public String transInStream2String(InputStream inStream) throws IOException {
@@ -147,12 +158,16 @@ public class ShellUtil {
 	 * 按指定编码把输入流转为文本
 	 * 
 	 * @param inStream
+	 * 
 	 * @param charset
+	 * 
 	 * @return
+	 * 
 	 * @throws IOException
 	 */
 	public static String transInStream2String(InputStream stream,
-			Charset charset) throws IOException {
+			Charset charset) throws IOException //
+	{
 		String result = null;
 		BufferedReader br = new BufferedReader(new InputStreamReader(stream,
 				charset));
@@ -169,7 +184,6 @@ public class ShellUtil {
 	 * 定义如何把标准输出和标准错误转为客户需要的结果。</br> 因为输出流不读取完可能会阻塞系统调用。所以对输出流的处理操作要在系统调用返回前先完成。
 	 * 
 	 * @author qwshan
-	 * 
 	 */
 	public interface StreamHandler {
 
@@ -177,6 +191,7 @@ public class ShellUtil {
 		 * 处理输出流
 		 * 
 		 * @param stdout
+		 * 
 		 * @return
 		 */
 		public Object trans(InputStream stream);
@@ -186,7 +201,6 @@ public class ShellUtil {
 	 * 即时地把标准
 	 * 
 	 * @author qwshan
-	 * 
 	 */
 	public class DefaultStreamHandler implements StreamHandler {
 		private Charset charset = null;
@@ -216,7 +230,6 @@ public class ShellUtil {
 	 * 返回结果
 	 * 
 	 * @author qwshan
-	 * 
 	 */
 	public class SysExecResult {
 

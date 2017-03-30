@@ -34,10 +34,10 @@ public class HTTPProxyTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-//		InputStream confIn = new BufferedInputStream(Thread.currentThread()
-//				.getContextClassLoader().getResourceAsStream(CONF_FILE_PROP));
-//		prop = new Properties();
-//		prop.load(confIn);
+		InputStream confIn = new BufferedInputStream(Thread.currentThread()
+				.getContextClassLoader().getResourceAsStream(CONF_FILE_PROP));
+		prop = new Properties();
+		prop.load(confIn);
 	}
 
 	@AfterClass
@@ -57,45 +57,45 @@ public class HTTPProxyTest {
 	 * proxy config in `http-proxy.properties` default is `127.0.0.1:7070`
 	 */
 	public void test() throws ClientProtocolException, IOException {
-//		Registry<ConnectionSocketFactory> reg = RegistryBuilder
-//				.<ConnectionSocketFactory> create()
-//				.register("http", new ProxySocketFactory())
-//				.register(
-//						"https",
-//						new ProxySSLSocketFactory(SSLContexts
-//								.createSystemDefault())).build();
-//		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(
-//				reg, new FakeDnsResolver());
-//		CloseableHttpClient httpclient = HttpClients.custom()
-//				.setConnectionManager(cm).build();
-//		try {
-//			InetSocketAddress socksaddr = new InetSocketAddress(
-//					prop.getProperty("proxy.host", "172.0.0.1"),
-//					Integer.parseInt(prop.getProperty("proxy.port", "30")));
-//			HttpClientContext context = HttpClientContext.create();
-//			context.setAttribute("socks.address", socksaddr);
-//
-//			HttpGet request = new HttpGet("http://www.facebook.com");
-//
-//			System.out.println("Executing request " + request
-//					+ " via SOCKS proxy " + socksaddr);
-//			CloseableHttpResponse response = httpclient.execute(request,
-//					context);
-//			try {
-//				System.out.println("----------------------------------------");
-//				System.out.println(response.getStatusLine());
-//				int i = -1;
-//				InputStream stream = response.getEntity().getContent();
-//				while ((i = stream.read()) != -1) {
-//					System.out.print((char) i);
-//				}
-//				EntityUtils.consume(response.getEntity());
-//			} finally {
-//				response.close();
-//			}
-//		} finally {
-//			httpclient.close();
-//		}
+		Registry<ConnectionSocketFactory> reg = RegistryBuilder
+				.<ConnectionSocketFactory> create()
+				.register("http", new ProxySocketFactory())
+				.register(
+						"https",
+						new ProxySSLSocketFactory(SSLContexts
+								.createSystemDefault())).build();
+		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(
+				reg, new FakeDnsResolver());
+		CloseableHttpClient httpclient = HttpClients.custom()
+				.setConnectionManager(cm).build();
+		try {
+			InetSocketAddress socksaddr = new InetSocketAddress(
+					prop.getProperty("proxy.host", "172.0.0.1"),
+					Integer.parseInt(prop.getProperty("proxy.port", "30")));
+			HttpClientContext context = HttpClientContext.create();
+			context.setAttribute("socks.address", socksaddr);
+
+			HttpGet request = new HttpGet("http://www.facebook.com");
+
+			System.out.println("Executing request " + request
+					+ " via SOCKS proxy " + socksaddr);
+			CloseableHttpResponse response = httpclient.execute(request,
+					context);
+			try {
+				System.out.println("----------------------------------------");
+				System.out.println(response.getStatusLine());
+				int i = -1;
+				InputStream stream = response.getEntity().getContent();
+				while ((i = stream.read()) != -1) {
+					System.out.print((char) i);
+				}
+				EntityUtils.consume(response.getEntity());
+			} finally {
+				response.close();
+			}
+		} finally {
+			httpclient.close();
+		}
 	}
 
 }

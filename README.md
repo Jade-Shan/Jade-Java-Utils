@@ -12,7 +12,10 @@ update log
 
 ## In Process
 
+jadeutils-base:
+
 * add Mockit example (need add to base jadelibs tool)
+* BUG: `ShellUtil`use new thread to process output steam and error steam.
 
 
 ## v0.1.18

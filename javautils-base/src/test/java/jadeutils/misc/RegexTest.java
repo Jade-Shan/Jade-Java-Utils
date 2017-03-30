@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 import jadeutils.base.DateCaculater;
 import jadeutils.base.ShellUtil;
 import jadeutils.base.ShellUtil.DefaultStreamHandler;
-//import jadeutils.base.ShellUtil.DefaultStreamHandler;
 import jadeutils.base.ShellUtil.SysExecResult;
 import jadeutils.text.TextTempletRanderTool;
 
@@ -46,6 +45,7 @@ public class RegexTest {
 	@Before
 	public void setUp() throws Exception {
 		this.osName = System.getProperty("os.name");
+		System.out.println(osName);
 		this.scpParams.put("host.user.password", "passwd");
 		this.scpParams.put("file.src", "/home/jade/tmp/test/test.01.data");
 		this.scpParams.put("file.target", "morgan@nginx.local-vm:~/tmp/");
@@ -83,42 +83,42 @@ public class RegexTest {
 		}
 	}
 
-//	@Test
-//	public void testXvfb() throws Exception {
-//		if (null != osName && osName.toLowerCase().contains("linux")) {
-//			String script = " Xvfb :77 -screen 0 1024x768x24 & ";
-//			System.out.println(script);
-//			// ShellUtil shell = new ShellUtil();
-//			// SysExecResult result = shell.runBashScript(script, null, null);
-//			// System.out.println(result.getOut());
-//		}
-//	}
-//
-//	@Test
-//	public void testTempRander() throws Exception {
-//		if (null != osName && osName.toLowerCase().contains("linux")) {
-//			String script = TextTempletRanderTool.render(this.scpTemplet,
-//					scpParams);
-//			System.out.println(script);
-//			script = "ls -al";
-//			// ShellUtil shell = new ShellUtil();
-//			// SysExecResult result = shell.runBashScript(script, null, null);
-//			// System.out.println(result.getOut());
-//		}
-//	}
-//
-//	@Test
-//	public void testWinCmd() throws Exception {
-//		if (null != osName && osName.toLowerCase().contains("windows")) {
-//			ShellUtil shell = new ShellUtil();
-//			// 定义对调用结果的输出流的处理方法
-//			// 这里是把输出流转为String
-//			DefaultStreamHandler hdl = shell.new DefaultStreamHandler("GB2312");
-//			shell.setStdoutCallback(hdl);
-//			shell.setStderrCallback(hdl);
-//			SysExecResult result = shell.runWinCmd("dir", null, null);
-//			System.out.println(result.getOut());
-//		}
-//	}
+	@Test
+	public void testXvfb() throws Exception {
+		if (null != osName && osName.toLowerCase().contains("linux")) {
+			String script = " Xvfb :77 -screen 0 1024x768x24 & ";
+			System.out.println(script);
+			ShellUtil shell = new ShellUtil();
+			SysExecResult result = shell.runBashScript(script, null, null);
+			System.out.println(result.getOut());
+		}
+	}
+
+	@Test
+	public void testTempRander() throws Exception {
+		if (null != osName && osName.toLowerCase().contains("linux")) {
+			String script = TextTempletRanderTool.render(this.scpTemplet,
+					scpParams);
+			System.out.println(script);
+			script = "ls -al";
+			ShellUtil shell = new ShellUtil();
+			SysExecResult result = shell.runBashScript(script, null, null);
+			System.out.println(result.getOut());
+		}
+	}
+
+	@Test
+	public void testWinCmd() throws Exception {
+		if (null != osName && osName.toLowerCase().contains("windows")) {
+			ShellUtil shell = new ShellUtil();
+			// 定义对调用结果的输出流的处理方法
+			// 这里是把输出流转为String
+			DefaultStreamHandler hdl = shell.new DefaultStreamHandler("GB2312");
+			shell.setStdoutCallback(hdl);
+			shell.setStderrCallback(hdl);
+			SysExecResult result = shell.runWinCmd("dir", null, null);
+			System.out.println(result.getOut());
+		}
+	}
 
 }
