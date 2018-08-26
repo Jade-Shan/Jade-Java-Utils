@@ -12,6 +12,10 @@ update log
 
 ## In Process
 
+Base pom:
+
+* add profile filter file config
+
 jadeutils-base:
 
 * add Mockit example (need add to base jadelibs tool)
