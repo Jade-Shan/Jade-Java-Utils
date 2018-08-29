@@ -12,6 +12,8 @@ update log
 
 ## In Process
 
+har utils: add project but not link to base util pom.
+
 Base pom:
 
 * add profile filter file config
