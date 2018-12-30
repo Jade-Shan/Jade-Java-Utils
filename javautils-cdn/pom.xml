@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>javautils</artifactId>
-		<version>0.1.18</version>
+		<version>0.1.19</version>
 	</parent>
 
 	<artifactId>javautils-cdn</artifactId>
@@ -67,7 +67,9 @@
 					<httpConnector>
 						<port>8080</port>
 					</httpConnector>
-					<!-- <jettyXml>jetty.xml,jetty-http.xml,jetty-ssl.xml,jetty-https.xml</jettyXml> -->
+					<!-- 
+					<jettyXml>jetty.xml,jetty-http.xml,jetty-ssl.xml,jetty-https.xml</jettyXml> 
+					-->
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webAppConfig>
 						<contextPath>/javautils-cdn</contextPath>

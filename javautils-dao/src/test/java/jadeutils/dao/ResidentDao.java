@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 
+@SuppressWarnings("deprecation")
 @Component("residentDao")
 public class ResidentDao extends BaseHibernateDao<Resident> {
 

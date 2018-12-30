@@ -10,6 +10,21 @@ Java utils
 update log
 ===============
 
+## In Process
+
+har utils: add project but not link to base util pom.
+
+Base pom:
+
+* add profile filter file config
+
+jadeutils-base:
+
+* add Mockit example (need add to base jadelibs tool)
+* ass sigar   to monitar system status 
+* BUG: `ShellUtil`use new thread to process output steam and error steam.
+
+
 ## v0.1.18
 
 * fix readme file

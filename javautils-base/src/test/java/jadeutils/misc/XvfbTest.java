@@ -38,15 +38,15 @@ public class XvfbTest {
 	public void tearDown() throws Exception {
 	}
 
-//	@Test
-//	public void testXvfb() throws Exception {
-//		if (null != osName && osName.toLowerCase().contains("linux")) {
-//			String script = " Xvfb :77 -screen 0 1024x768x24 & ";
-//			System.out.println(script);
-//			ShellUtil shell = new ShellUtil();
-//			SysExecResult result = shell.runBashScript(script, null, null);
-//			System.out.println(result.getOut());
-//		}
-//	}
+	@Test
+	public void testXvfb() throws Exception {
+		if (null != osName && osName.toLowerCase().contains("linux")) {
+			String script = " Xvfb :77 -screen 0 1024x768x24 & ";
+			System.out.println(script);
+			ShellUtil shell = new ShellUtil();
+			SysExecResult result = shell.runBashScript(script, null, null);
+			System.out.println(result.getOut());
+		}
+	}
 
 }

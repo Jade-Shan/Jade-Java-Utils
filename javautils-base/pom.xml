@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>net.jade-dungeon</groupId>
 		<artifactId>javautils</artifactId>
-		<version>0.1.18</version>
+		<version>0.1.19</version>
 	</parent>
 
 	<artifactId>javautils-base</artifactId>
@@ -14,6 +14,20 @@
 	<version>${javautils-base.version}</version>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.hyperic</groupId>
+			<artifactId>sigar</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+		 -->
+
 		<!-- <dependency> <groupId>com.google.code.kaptcha</groupId> <artifactId>kaptcha</artifactId> 
 			<version>${kaptcha.version}</version> </dependency> -->
 		<dependency>
