@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class JsonUtils {
 	private ObjectMapper mapper;
 
+	@SuppressWarnings("deprecation")
 	private JsonUtils(Inclusion inclusion) {
 		mapper = new ObjectMapper();
 		// 设置输出包含的属性
@@ -79,6 +80,7 @@ public class JsonUtils {
 	/*
 	 * 设置转换日期类型的format pattern,如果不设置默认打印Timestamp毫秒数.
 	 */
+	@SuppressWarnings("deprecation")
 	public void setDateFormat(String pattern) {
 		if (StringUtils.isNotBlank(pattern)) {
 			DateFormat df = new SimpleDateFormat(pattern);
