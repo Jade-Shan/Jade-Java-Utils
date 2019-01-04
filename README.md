@@ -12,18 +12,27 @@ update log
 
 ## In Process
 
-har utils: add project but not link to base util pom.
+* :sparkles: har utils: add project but not link to base util pom.
 
 Base pom:
 
-* add profile filter file config
+* :sparkles: add profile filter file config
 
 jadeutils-base:
 
-* add Mockit example (need add to base jadelibs tool)
-* ass sigar   to monitar system status 
-* BUG: `ShellUtil`use new thread to process output steam and error steam.
+* :sparkles: add Mockit example (need add to base jadelibs tool)
+* :sparkles: add sigar   to monitar system status 
+* :bug: BUG: `ShellUtil`use new thread to process output steam and error steam.
 
+jadeutils-web:
+
+* :sparkles: mail util receive imap pop3 by SSL 
+* :sparkles: mail util send email no SSL
+* :sparkles: mail util send email by SSL
+
+## v0.1.20-SNAPSHOT
+
+* :sparkles: mail util receive imap pop3 no SSL 
 
 ## v0.1.18
 
