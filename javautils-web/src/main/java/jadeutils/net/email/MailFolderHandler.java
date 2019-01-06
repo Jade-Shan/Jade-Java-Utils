@@ -15,7 +15,8 @@ public interface MailFolderHandler {
 	 *            处理目录下每封邮件主体的逻辑的实现
 	 * @param athmHandler
 	 *            处理目录下每封邮件附件逻辑的实现
-	 * @throws IOException
+	 * @throws IOException 
+	 *         something err
 	 */
 	public void handleMailFolder(Folder folder, MailBodyHandler bodyHandler, MailAttachmentHandler athmHandler)
 			throws IOException;

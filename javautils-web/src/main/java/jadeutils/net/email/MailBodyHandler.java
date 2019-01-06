@@ -11,7 +11,7 @@ public interface MailBodyHandler {
 	 * 
 	 * @param msg
 	 *            邮件的主体
-	 * @throws IOException
+	 * @throws IOException io exception
 	 */
 	public void handleMailBody(Message msg) throws IOException;
 }
