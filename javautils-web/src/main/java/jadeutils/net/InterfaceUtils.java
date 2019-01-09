@@ -13,7 +13,9 @@ public class InterfaceUtils {
 	/**
 	 * 获取本地IP地址
 	 *
-	 * @throws SocketException
+	 * @return return local ip address
+	 * @throws UnknownHostException unkno host
+	 * @throws SocketException socket err
 	 */
 	public static String getLocalIP() throws UnknownHostException,
 			SocketException //
@@ -113,7 +115,9 @@ public class InterfaceUtils {
 
 
 	/**
-	 * 获取本地Host名称
+	 * get local host name
+	 * @return local host name
+	 * @throws UnknownHostException unknow host
 	 */
 	public static String getLocalHostName() throws UnknownHostException {
 		return InetAddress.getLocalHost().getHostName();

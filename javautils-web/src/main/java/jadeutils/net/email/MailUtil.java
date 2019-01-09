@@ -68,6 +68,7 @@ public class MailUtil {
 	 * @param athmHandler
 	 *            handle mail attachment in every mail
 	 * @throws Exception
+	 *         something err
 	 */
 	public static void receiveMail(Properties emailProps, String email, String password, boolean isReadOnly,
 			MailFolderHandler folderHandler, MailBodyHandler bodyHandler, MailAttachmentHandler athmHandler)
@@ -120,7 +121,9 @@ public class MailUtil {
 	 * @param messages
 	 *            message ( could be one or many) to parse
 	 * @throws MessagingException
+	 *         something err
 	 * @throws IOException
+	 *         something err
 	 */
 	public static void parseMessage(MailBodyHandler bodyHandler, MailAttachmentHandler athmHandler, Message... messages)
 			throws MessagingException, IOException //
@@ -145,6 +148,10 @@ public class MailUtil {
 	 * @param msg
 	 *            mail body
 	 * @return subject of mail
+	 * @throws UnsupportedEncodingException
+	 * io err
+	 * @throws MessagingException
+	 * io err
 	 */
 	public static String getSubject(Message msg) throws UnsupportedEncodingException, MessagingException //
 	{
@@ -158,7 +165,9 @@ public class MailUtil {
 	 *            mail
 	 * @return sender
 	 * @throws MessagingException
+	 *         something err
 	 * @throws UnsupportedEncodingException
+	 *         something err
 	 */
 	public static String getSender(MimeMessage msg) throws MessagingException, UnsupportedEncodingException //
 	{
@@ -175,9 +184,11 @@ public class MailUtil {
 	 * 
 	 * @param msg
 	 *            mail
-	 * @return name <mail_address>
+	 * @return name &lt; mail_address &gt;
 	 * @throws MessagingException
+	 *         something err
 	 * @throws UnsupportedEncodingException
+	 *         something err
 	 */
 	public static String getFrom(Message msg) throws MessagingException, UnsupportedEncodingException //
 	{
@@ -208,8 +219,9 @@ public class MailUtil {
 	 *            recipient type / Message.RecipientType.TO /
 	 *            Message.RecipientType.CC / Message.RecipientType.BCC. Return all
 	 *            by default.
-	 * @return name1 <mail_address1>, name2 <mail_address2>, ...
+	 * @return name1 &lt; mail_address1 &gt; , name2 &lt; mail_address2 &gt;, ...
 	 * @throws MessagingException
+	 *         something err
 	 */
 	public static String getReceiveAddress(Message msg, Message.RecipientType type) throws MessagingException //
 	{
@@ -242,6 +254,7 @@ public class MailUtil {
 	 *            String for java date format
 	 * @return yyyy-MM-dd_E_HH:mm:ss
 	 * @throws MessagingException
+	 *         something err
 	 */
 	public static String getSentDate(Message msg, String pattern) throws MessagingException //
 	{
@@ -259,11 +272,13 @@ public class MailUtil {
 	/**
 	 * mail has attachment or not
 	 * 
-	 * @param msg
+	 * @param part  
 	 *            mail
 	 * @return true or false
 	 * @throws MessagingException
+	 *         something err
 	 * @throws IOException
+	 *         something err
 	 */
 	public static boolean hasAttachment(Part part) throws MessagingException, IOException {
 		boolean flag = false;
@@ -304,6 +319,7 @@ public class MailUtil {
 	 *            mail
 	 * @return true or false
 	 * @throws MessagingException
+	 *         something err
 	 */
 	public static boolean isSeen(Message msg) throws MessagingException {
 		return msg.getFlags().contains(Flags.Flag.SEEN);
@@ -316,6 +332,7 @@ public class MailUtil {
 	 *            mail
 	 * @return true or false
 	 * @throws MessagingException
+	 *         something err
 	 */
 	public static boolean isReplySign(Message msg) throws MessagingException {
 		boolean replySign = false;
@@ -332,6 +349,7 @@ public class MailUtil {
 	 *            mail
 	 * @return 1(High):紧急 3:普通(Normal) 5:低(Low)
 	 * @throws MessagingException
+	 *         something err
 	 */
 	public static String getPriority(Message msg) throws MessagingException {
 		String priority = "普通";
@@ -355,10 +373,10 @@ public class MailUtil {
 	 *            mail body part
 	 * @param content
 	 *            content of mail body
-	 * @param part
-	 * @param content
 	 * @throws MessagingException
+	 *         something err
 	 * @throws IOException
+	 *         something err
 	 */
 	public static void parseMailTextContent(Part part, Map<String, StringBuffer> content)
 			throws MessagingException, IOException //
@@ -401,9 +419,13 @@ public class MailUtil {
 	 * @param athmHandler
 	 *            attachment handler
 	 * @throws UnsupportedEncodingException
+	 *         something err
 	 * @throws MessagingException
+	 *         something err
 	 * @throws FileNotFoundException
+	 *         something err
 	 * @throws IOException
+	 *         something err
 	 */
 	public static void parseAttachment(Message msg, Part part, MailAttachmentHandler athmHandler)
 			throws UnsupportedEncodingException, MessagingException, FileNotFoundException, IOException //
@@ -442,6 +464,7 @@ public class MailUtil {
 	 *            MimeUtility.encodeText(String text)
 	 * @return text
 	 * @throws UnsupportedEncodingException
+	 *         something err
 	 */
 	public static String decodeText(String encodedText) throws UnsupportedEncodingException {
 		if (encodedText == null || "".equals(encodedText)) {
