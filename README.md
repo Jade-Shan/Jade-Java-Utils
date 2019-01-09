@@ -33,6 +33,7 @@ jadeutils-web:
 ## v0.1.20-SNAPSHOT
 
 * :sparkles: mail util receive imap pop3 no SSL 
+* :sparkles: add greenmail mail serv mock
 
 ## v0.1.18
 

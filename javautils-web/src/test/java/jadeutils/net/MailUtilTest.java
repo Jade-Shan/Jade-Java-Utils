@@ -1,24 +1,38 @@
 package jadeutils.net;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.icegreen.greenmail.util.GreenMail;
+import com.icegreen.greenmail.util.ServerSetup;
+import com.sun.mail.imap.IMAPStore;
 
 import jadeutils.base.FileOperater;
 import jadeutils.net.email.MailAttachmentHandler;
@@ -45,13 +59,24 @@ public class MailUtilTest {
 	// private static final String smtpPort = "25";
 	// private static final String smtpSslPort = "994";// 994 or 456
 
-	private static final String email = "test@test.com";
-	private static final String password = "qwer1234";
+	private static final String email_163 = "test@test.com";
+	private static final String password_163 = "qwer1234";
 
 	private static final Properties MAIL_SERV_CFG_163_RPOP3_NOSSL = new Properties();
 	private static final Properties MAIL_SERV_CFG_163_IMAP_NOSSL = new Properties();
 	private static final Properties MAIL_SERV_CFG_163_RPOP3_SSL = new Properties();
 	private static final Properties MAIL_SERV_CFG_163_IMAP_SSL = new Properties();
+	private static final Properties MAIL_SERV_CFG_163_SMTP_SSL = new Properties();
+
+	private static final String email_greenmail_FROM = "bar@example.com";
+	private static final String password_greenmail_FROM = "secret-pwd";
+	private static final String email_greenmail_TO = "bar@example.com";
+	private static final String password_greenmail_TO = "secret-pwd";
+	// ,
+
+	private static final Properties MAIL_SERV_CFG_GREENMAIL_IMAP_NOSSL = new Properties();
+	private static final Properties MAIL_SERV_CFG_GREENMAIL_POP3_NOSSL = new Properties();
+	private static final Properties MAIL_SERV_CFG_GREENMAIL_SMTP_NOSSL = new Properties();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -80,18 +105,34 @@ public class MailUtilTest {
 		MAIL_SERV_CFG_163_RPOP3_SSL.setProperty("mail.pop3.host", "pop3.163.com");
 		MAIL_SERV_CFG_163_RPOP3_SSL.setProperty("mail.pop3.port", "995");
 		MAIL_SERV_CFG_163_RPOP3_SSL.setProperty("mail.pop3.auth.plain.disable", "true");
+
+		// 准备连接服务器的会话信息
+		MAIL_SERV_CFG_163_SMTP_SSL.setProperty("mail.smtp.host", "smtp.163.com");
+		MAIL_SERV_CFG_163_SMTP_SSL.setProperty("mail.smtp.port", "25");
+		MAIL_SERV_CFG_163_SMTP_SSL.setProperty("mail.smtp.socketFactory.port", "25");
+		MAIL_SERV_CFG_163_SMTP_SSL.setProperty("mail.smtp.auth", "true");
+		MAIL_SERV_CFG_163_SMTP_SSL.setProperty("mail.smtp.socketFactory.class", "SSL_FACTORY");
+
+		// 准备连接服务器的会话信息
+		MAIL_SERV_CFG_GREENMAIL_IMAP_NOSSL.setProperty("mail.store.protocol", "imap");
+		MAIL_SERV_CFG_GREENMAIL_IMAP_NOSSL.setProperty("mail.imap.ssl.enable", "false");
+		MAIL_SERV_CFG_GREENMAIL_IMAP_NOSSL.setProperty("mail.imap.host", "127.0.0.1");
+		MAIL_SERV_CFG_GREENMAIL_IMAP_NOSSL.setProperty("mail.imap.port", "3143");
+
+		// 准备连接服务器的会话信息
+		MAIL_SERV_CFG_GREENMAIL_POP3_NOSSL.setProperty("mail.store.protocol", "pop3");
+		MAIL_SERV_CFG_GREENMAIL_POP3_NOSSL.setProperty("mail.pop3.ssl.enable", "false");
+		MAIL_SERV_CFG_GREENMAIL_POP3_NOSSL.setProperty("mail.pop3.host", "127.0.0.1");
+		MAIL_SERV_CFG_GREENMAIL_POP3_NOSSL.setProperty("mail.pop3.port", "3110");
+
+		// 准备连接服务器的会话信息
+		MAIL_SERV_CFG_GREENMAIL_SMTP_NOSSL.setProperty("mail.smtp.host", "127.0.0.1");
+		MAIL_SERV_CFG_GREENMAIL_SMTP_NOSSL.setProperty("mail.smtp.port", "3025");
+		MAIL_SERV_CFG_GREENMAIL_SMTP_NOSSL.setProperty("mail.smtp.auth", "false");
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	private MailFolderHandler defaultFolderHandler = new MailFolderHandler() {
@@ -138,9 +179,16 @@ public class MailUtilTest {
 				 */
 				Map<String, StringBuffer> content = new HashMap<>();
 				MailUtil.parseMailTextContent(msg, content);
-				System.out.println("邮件正文预览：" + content.get(MailUtil.MAIL_TYPE_TEXT_PAIN).toString().substring(0, 200));
-				System.out
-						.println("邮件正文HTML：" + content.get(MailUtil.MAIL_TYPE_TEXT_HTML).toString().substring(0, 200));
+				if (content.containsKey(MailUtil.MAIL_TYPE_TEXT_PAIN)) {
+					String s1 = content.get(MailUtil.MAIL_TYPE_TEXT_PAIN).toString();
+					s1 = s1.length() < 200 ? s1 : s1.substring(0, 200);
+					System.out.println("邮件正文预览：" + s1);
+				}
+				if (content.containsKey(MailUtil.MAIL_TYPE_TEXT_HTML)) {
+					String s1 = content.get(MailUtil.MAIL_TYPE_TEXT_HTML).toString();
+					s1 = s1.length() < 200 ? s1 : s1.substring(0, 200);
+					System.out.println("邮件正文HTML：" + s1);
+				}
 				/*
 				 * 设置已读标志 <br/> msg.setFlag(Flag.SEEN, true);
 				 */
@@ -149,6 +197,7 @@ public class MailUtilTest {
 				 */
 				System.out.println("------------------第" + msg.getMessageNumber() + "封邮件解析结束，并将其标记为已读 ---------- \n");
 			} catch (Exception e) {
+				e.printStackTrace();
 				throw new IOException(e.getMessage());
 			}
 		}
@@ -169,15 +218,133 @@ public class MailUtilTest {
 		}
 	};
 
+	private ServerSetup[] GREEN_MAIL_SETUP = { //
+			new ServerSetup(3025, "localhost", "smtp"), //
+			new ServerSetup(3110, "localhost", "pop3"), //
+			new ServerSetup(3143, "localhost", "imap"), //
+			new ServerSetup(3465, "localhost", "smtps"), //
+			new ServerSetup(3995, "localhost", "pop3s"), //
+			new ServerSetup(3993, "localhost", "imaps") //
+	};
+
+	// @Rule
+	// public final GreenMailRule greenMail = new GreenMailRule(GREEN_MAIL_SETUP);
+	private GreenMail greenMail = null;
+
+	@Before
+	public void setUp() throws Exception {
+		greenMail = new GreenMail(GREEN_MAIL_SETUP);
+		greenMail.start();
+
+		// Create user, as connect verifies pwd
+		greenMail.setUser(email_greenmail_FROM, email_greenmail_FROM, password_greenmail_FROM);
+		greenMail.setUser(email_greenmail_TO, email_greenmail_TO, password_greenmail_TO);
+
+		Session smtpSession = greenMail.getSmtp().createSession();
+
+		Message msg = null;
+		// simple text message
+		msg = new MimeMessage(smtpSession);
+		msg.setFrom(new InternetAddress(email_greenmail_FROM));
+		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email_greenmail_TO));
+		msg.setSubject("Test Pain-Text email");
+		msg.setText("This is Text mail");
+		Transport.send(msg);
+
+		// muti part message
+		msg = new MimeMessage(smtpSession);
+		msg.setFrom(new InternetAddress(email_greenmail_FROM));
+		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email_greenmail_TO));
+		msg.setSubject("Test Muti-Part email");
+		MimeMultipart multipart = new MimeMultipart();
+		final MimeBodyPart part1 = new MimeBodyPart();
+		part1.setContent("Pain-text preview in Muti-Part email", "text/plain");
+		multipart.addBodyPart(part1);
+		final MimeBodyPart part2 = new MimeBodyPart();
+		part2.setContent("<br>HTML Source in  Muti-Part email</br>", "text/html");
+		multipart.addBodyPart(part2);
+		msg.setContent(multipart);
+		Transport.send(msg);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		greenMail.stop();
+	}
+
+	@Test
+	public void testGetGreenMail() throws Exception {
+
+		MailUtil.receiveMail(MAIL_SERV_CFG_GREENMAIL_IMAP_NOSSL, email_greenmail_TO, password_greenmail_TO, true,
+				defaultFolderHandler, defaultBodyHandler, defaultAttachmentHandler);
+
+		// Alternative 1: Create session and store or ...
+		Session imapSession = greenMail.getImap().createSession();
+		Store store = imapSession.getStore("imap");
+		store.connect(email_greenmail_TO, password_greenmail_TO);
+		Folder inbox = store.getFolder("INBOX");
+		inbox.open(Folder.READ_ONLY);
+		Message msgReceived = inbox.getMessage(1);
+		assertEquals("Test Pain-Text email", msgReceived.getSubject());
+		store.close();
+
+		// Alternative 2: ... let GreenMail create and configure a store:
+		IMAPStore imapStore = greenMail.getImap().createStore();
+		imapStore.connect(email_greenmail_TO, password_greenmail_TO);
+		inbox = imapStore.getFolder("INBOX");
+		inbox.open(Folder.READ_ONLY);
+		msgReceived = inbox.getMessage(1);
+		assertEquals("Test Pain-Text email", msgReceived.getSubject());
+		imapStore.close();
+
+		// Alternative 3: ... directly fetch sent message using GreenMail API
+		assertEquals(2, greenMail.getReceivedMessagesForDomain(email_greenmail_TO).length);
+		msgReceived = greenMail.getReceivedMessagesForDomain(email_greenmail_TO)[0];
+		assertEquals("Test Pain-Text email", msgReceived.getSubject());
+
+	}
+
+	@Test
+	public void testSendGreenMail() throws Exception {
+
+		Session session = Session.getInstance(MAIL_SERV_CFG_GREENMAIL_SMTP_NOSSL, new Authenticator() {
+			// 设置认证账户信息
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(email_greenmail_FROM, password_greenmail_FROM);
+			}
+		});
+		session.setDebug(true);
+		System.out.println("创建邮件");
+		MimeMessage message = new MimeMessage(session);
+		// 发件人
+		message.setFrom(new InternetAddress(email_greenmail_FROM));
+		// 收件人和抄送人
+		message.setRecipients(Message.RecipientType.TO, email_greenmail_TO);
+		// message.setRecipients(Message.RecipientType.CC, MY_EMAIL_ACCOUNT);
+
+		// 内容(这个内容还不能乱写,有可能会被SMTP拒绝掉;多试几次吧)
+		message.setSubject("包裹");
+		message.setContent("<h1>李总,您好;你的包裹在前台</h1>", "text/html;charset=UTF-8");
+		message.setSentDate(new Date());
+		message.saveChanges();
+		System.out.println("准备发送");
+		Transport.send(message);
+
+		MailUtil.receiveMail(MAIL_SERV_CFG_GREENMAIL_IMAP_NOSSL, email_greenmail_TO, password_greenmail_TO, true,
+				defaultFolderHandler, defaultBodyHandler, defaultAttachmentHandler);
+
+	}
+
 	@Test
 	public void testLoopAllFolderIMAP() throws Exception {
-		MailUtil.receiveMail(MAIL_SERV_CFG_163_IMAP_NOSSL, email, password, true, defaultFolderHandler,
+		MailUtil.receiveMail(MAIL_SERV_CFG_163_IMAP_NOSSL, email_163, password_163, true, defaultFolderHandler,
 				defaultBodyHandler, defaultAttachmentHandler);
 	}
 
 	@Test
 	public void testLoopAllFolderPOP3() throws Exception {
-		MailUtil.receiveMail(MAIL_SERV_CFG_163_RPOP3_NOSSL, email, password, true, defaultFolderHandler,
+		MailUtil.receiveMail(MAIL_SERV_CFG_163_RPOP3_NOSSL, email_163, password_163, true, defaultFolderHandler,
 				defaultBodyHandler, defaultAttachmentHandler);
 	}
 
@@ -192,7 +359,7 @@ public class MailUtilTest {
 		// 创建IMAP协议的Store对象
 		Store store = session.getStore("imap");
 		// 连接邮件服务器
-		store.connect(email, password);
+		store.connect(email_163, password_163);
 		// 获得收件箱
 		Folder from = store.getFolder(fromStr);
 		from.open(Folder.READ_WRITE);
