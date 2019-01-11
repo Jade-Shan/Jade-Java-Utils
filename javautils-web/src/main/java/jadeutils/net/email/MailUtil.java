@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Address;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -16,12 +17,17 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+
+import jadeutils.text.HtmlUtil;
 
 /**
  * 使用IMAP协议接收邮件
@@ -52,6 +58,120 @@ public class MailUtil {
 	public static final String MAIL_TYPE_MSG_RFC822 = "message/rfc822";
 
 	/**
+	 * send email
+	 * 
+	 * @param emailProps
+	 *            email props
+	 * @param email
+	 *            email
+	 * @param password
+	 *            password
+	 * @param toArr
+	 *            toArr
+	 * @param ccArr
+	 *            ccArr
+	 * @param bccArr
+	 *            bccArr
+	 * @param subject
+	 *            subject
+	 * @param text
+	 *            text
+	 * @throws Exception
+	 *             exception
+	 */
+	public static void sendTextMail(Properties emailProps, String email, String password, String[] toArr,
+			String[] ccArr, String[] bccArr, String subject, String text) throws Exception //
+	{
+		Session smtpSession = Session.getInstance(emailProps, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(email, password);
+			}
+		});
+		try {
+			Message msg = null;
+			msg = new MimeMessage(smtpSession);
+			msg.setFrom(new InternetAddress(email));
+			for (String to : toArr) {
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			}
+			for (String cc : ccArr) {
+				msg.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+			}
+			for (String bcc : bccArr) {
+				msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
+			}
+			msg.setSubject(subject);
+			msg.setText(text);
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+
+	/**
+	 * send email
+	 * 
+	 * @param emailProps
+	 *            email props
+	 * @param email
+	 *            email
+	 * @param password
+	 *            password
+	 * @param toArr
+	 *            toArr
+	 * @param ccArr
+	 *            ccArr
+	 * @param bccArr
+	 *            bccArr
+	 * @param subject
+	 *            subject
+	 * @param text
+	 *            text
+	 * @throws Exception
+	 *             exception
+	 */
+	public static void sendHtmlMail(Properties emailProps, String email, String password, String[] toArr,
+			String[] ccArr, String[] bccArr, String subject, String html) throws Exception //
+	{
+		Session smtpSession = Session.getInstance(emailProps, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(email, password);
+			}
+		});
+		try {
+			Message msg = null;
+			msg = new MimeMessage(smtpSession);
+			msg.setFrom(new InternetAddress(email));
+			for (String to : toArr) {
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			}
+			for (String cc : ccArr) {
+				msg.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+			}
+			for (String bcc : bccArr) {
+				msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
+			}
+			msg.setSubject(subject);
+			MimeMultipart multipart = new MimeMultipart();
+			final MimeBodyPart part1 = new MimeBodyPart();
+			// MimeBodyPart part1 = new MimeBodyPart();
+			part1.setContent(html, "text/html;charset=UTF-8");
+			multipart.addBodyPart(part1);
+			final MimeBodyPart part2 = new MimeBodyPart();
+			// MimeBodyPart part2 = new MimeBodyPart();
+			String text = HtmlUtil.html2text(html);
+			part2.setContent(text, "text/plain;charset=UTF-8");
+			multipart.addBodyPart(part2);
+			msg.setContent(multipart);
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+
+	/**
 	 * 
 	 * @param emailProps
 	 *            mail server connection props
@@ -68,7 +188,7 @@ public class MailUtil {
 	 * @param athmHandler
 	 *            handle mail attachment in every mail
 	 * @throws Exception
-	 *         something err
+	 *             something err
 	 */
 	public static void receiveMail(Properties emailProps, String email, String password, boolean isReadOnly,
 			MailFolderHandler folderHandler, MailBodyHandler bodyHandler, MailAttachmentHandler athmHandler)
@@ -121,9 +241,9 @@ public class MailUtil {
 	 * @param messages
 	 *            message ( could be one or many) to parse
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 * @throws IOException
-	 *         something err
+	 *             something err
 	 */
 	public static void parseMessage(MailBodyHandler bodyHandler, MailAttachmentHandler athmHandler, Message... messages)
 			throws MessagingException, IOException //
@@ -149,9 +269,9 @@ public class MailUtil {
 	 *            mail body
 	 * @return subject of mail
 	 * @throws UnsupportedEncodingException
-	 * io err
+	 *             io err
 	 * @throws MessagingException
-	 * io err
+	 *             io err
 	 */
 	public static String getSubject(Message msg) throws UnsupportedEncodingException, MessagingException //
 	{
@@ -165,9 +285,9 @@ public class MailUtil {
 	 *            mail
 	 * @return sender
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 * @throws UnsupportedEncodingException
-	 *         something err
+	 *             something err
 	 */
 	public static String getSender(MimeMessage msg) throws MessagingException, UnsupportedEncodingException //
 	{
@@ -186,9 +306,9 @@ public class MailUtil {
 	 *            mail
 	 * @return name &lt; mail_address &gt;
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 * @throws UnsupportedEncodingException
-	 *         something err
+	 *             something err
 	 */
 	public static String getFrom(Message msg) throws MessagingException, UnsupportedEncodingException //
 	{
@@ -221,7 +341,7 @@ public class MailUtil {
 	 *            by default.
 	 * @return name1 &lt; mail_address1 &gt; , name2 &lt; mail_address2 &gt;, ...
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 */
 	public static String getReceiveAddress(Message msg, Message.RecipientType type) throws MessagingException //
 	{
@@ -254,7 +374,7 @@ public class MailUtil {
 	 *            String for java date format
 	 * @return yyyy-MM-dd_E_HH:mm:ss
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 */
 	public static String getSentDate(Message msg, String pattern) throws MessagingException //
 	{
@@ -272,13 +392,13 @@ public class MailUtil {
 	/**
 	 * mail has attachment or not
 	 * 
-	 * @param part  
+	 * @param part
 	 *            mail
 	 * @return true or false
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 * @throws IOException
-	 *         something err
+	 *             something err
 	 */
 	public static boolean hasAttachment(Part part) throws MessagingException, IOException {
 		boolean flag = false;
@@ -319,7 +439,7 @@ public class MailUtil {
 	 *            mail
 	 * @return true or false
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 */
 	public static boolean isSeen(Message msg) throws MessagingException {
 		return msg.getFlags().contains(Flags.Flag.SEEN);
@@ -332,7 +452,7 @@ public class MailUtil {
 	 *            mail
 	 * @return true or false
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 */
 	public static boolean isReplySign(Message msg) throws MessagingException {
 		boolean replySign = false;
@@ -349,7 +469,7 @@ public class MailUtil {
 	 *            mail
 	 * @return 1(High):紧急 3:普通(Normal) 5:低(Low)
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 */
 	public static String getPriority(Message msg) throws MessagingException {
 		String priority = "普通";
@@ -374,9 +494,9 @@ public class MailUtil {
 	 * @param content
 	 *            content of mail body
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 * @throws IOException
-	 *         something err
+	 *             something err
 	 */
 	public static void parseMailTextContent(Part part, Map<String, StringBuffer> content)
 			throws MessagingException, IOException //
@@ -419,13 +539,13 @@ public class MailUtil {
 	 * @param athmHandler
 	 *            attachment handler
 	 * @throws UnsupportedEncodingException
-	 *         something err
+	 *             something err
 	 * @throws MessagingException
-	 *         something err
+	 *             something err
 	 * @throws FileNotFoundException
-	 *         something err
+	 *             something err
 	 * @throws IOException
-	 *         something err
+	 *             something err
 	 */
 	public static void parseAttachment(Message msg, Part part, MailAttachmentHandler athmHandler)
 			throws UnsupportedEncodingException, MessagingException, FileNotFoundException, IOException //
@@ -464,7 +584,7 @@ public class MailUtil {
 	 *            MimeUtility.encodeText(String text)
 	 * @return text
 	 * @throws UnsupportedEncodingException
-	 *         something err
+	 *             something err
 	 */
 	public static String decodeText(String encodedText) throws UnsupportedEncodingException {
 		if (encodedText == null || "".equals(encodedText)) {
