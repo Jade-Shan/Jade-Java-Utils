@@ -6,8 +6,11 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
@@ -128,11 +131,14 @@ public class MailUtil {
 	 *            subject
 	 * @param text
 	 *            text
+	 * @param attachments
+	 *            attachments
 	 * @throws Exception
 	 *             exception
 	 */
-	public static void sendHtmlMail(Properties emailProps, String email, String password, String[] toArr,
-			String[] ccArr, String[] bccArr, String subject, String html) throws Exception //
+	public static void sendTextMail(Properties emailProps, String email, String password, String[] toArr,
+			String[] ccArr, String[] bccArr, String subject, String text, Map<String, DataSource> attachments)
+			throws Exception //
 	{
 		Session smtpSession = Session.getInstance(emailProps, new Authenticator() {
 			@Override
@@ -154,16 +160,121 @@ public class MailUtil {
 				msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
 			}
 			msg.setSubject(subject);
+
 			MimeMultipart multipart = new MimeMultipart();
-			final MimeBodyPart part1 = new MimeBodyPart();
-			// MimeBodyPart part1 = new MimeBodyPart();
-			part1.setContent(html, "text/html;charset=UTF-8");
-			multipart.addBodyPart(part1);
-			final MimeBodyPart part2 = new MimeBodyPart();
-			// MimeBodyPart part2 = new MimeBodyPart();
+			MimeBodyPart part0 = new MimeBodyPart();
+			part0.setContent(text, "text/plain;charset=UTF-8");
+			multipart.addBodyPart(part0);
+			if (null != attachments) {
+				for (Entry<String, DataSource> ath : attachments.entrySet()) {
+					MimeBodyPart pat = new MimeBodyPart();
+					pat.setDataHandler(new DataHandler(ath.getValue()));
+					pat.setFileName(ath.getKey());
+					multipart.addBodyPart(pat);
+				}
+				multipart.setSubType("mixed");
+			}
+			msg.setContent(multipart);
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+
+	/**
+	 * send email
+	 * 
+	 * @param emailProps
+	 *            email props
+	 * @param email
+	 *            email
+	 * @param password
+	 *            password
+	 * @param toArr
+	 *            toArr
+	 * @param ccArr
+	 *            ccArr
+	 * @param bccArr
+	 *            bccArr
+	 * @param subject
+	 *            subject
+	 * @param text
+	 *            text
+	 * @param related
+	 *            related attachments
+	 * @param attachments
+	 *            attachments
+	 * @throws Exception
+	 *             exception
+	 */
+	public static void sendHtmlMail(Properties emailProps, String email, String password, String[] toArr,
+			String[] ccArr, String[] bccArr, String subject, String html, Map<String, DataSource> related,
+			Map<String, DataSource> attachments) throws Exception //
+	{
+		Session smtpSession = Session.getInstance(emailProps, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(email, password);
+			}
+		});
+		try {
+			Message msg = null;
+			msg = new MimeMessage(smtpSession);
+			msg.setFrom(new InternetAddress(email));
+			for (String to : toArr) {
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			}
+			for (String cc : ccArr) {
+				msg.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+			}
+			for (String bcc : bccArr) {
+				msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
+			}
+			msg.setSubject(subject);
+
+			//
+			MimeMultipart pageMulti = new MimeMultipart();
+			MimeBodyPart pageBody = new MimeBodyPart();
+			pageBody.setContent(html, "text/html;charset=UTF-8");
+			pageMulti.addBodyPart(pageBody);
+			if (null != related) {
+				for (Entry<String, DataSource> ath : related.entrySet()) {
+					MimeBodyPart pat = new MimeBodyPart();
+					pat.setDataHandler(new DataHandler(ath.getValue()));
+					pat.setContentID(ath.getKey());
+					pageMulti.addBodyPart(pat);
+				}
+				pageMulti.setSubType("related");
+			}
+
+			//
+			MimeBodyPart contentBody = new MimeBodyPart();
+			contentBody.setContent(pageMulti);
+			MimeMultipart contentMulti = new MimeMultipart();
+			contentMulti.addBodyPart(contentBody);
+			if (null != attachments) {
+				for (Entry<String, DataSource> ath : attachments.entrySet()) {
+					MimeBodyPart pat = new MimeBodyPart();
+					pat.setDataHandler(new DataHandler(ath.getValue()));
+					pat.setFileName(ath.getKey());
+					contentMulti.addBodyPart(pat);
+				}
+				contentMulti.setSubType("mixed");
+			}
+			
+			//
+			MimeBodyPart mmBody = new MimeBodyPart();
+			mmBody.setContent(contentMulti);
+			MimeMultipart multipart = new MimeMultipart();
+			multipart.addBodyPart(mmBody);
+
+//			MimeMultipart textMulti = new MimeMultipart();
+			MimeBodyPart textBody = new MimeBodyPart();
 			String text = HtmlUtil.html2text(html);
-			part2.setContent(text, "text/plain;charset=UTF-8");
-			multipart.addBodyPart(part2);
+			textBody.setContent(text, "text/plain;charset=UTF-8");
+			multipart.addBodyPart(textBody);
+//			textMulti.addBodyPart(textBody);
+
 			msg.setContent(multipart);
 			Transport.send(msg);
 		} catch (MessagingException e) {
@@ -205,8 +316,9 @@ public class MailUtil {
 			// 连接邮件服务器
 			store.connect(email, password);
 		} catch (Exception e) {
-			String s = new String(e.getMessage().getBytes("iso8859-1"), "gbk");
-			System.out.println("aaaa: " + s);
+			throw e;
+			// String s = new String(e.getMessage().getBytes("iso8859-1"), errCharset);
+			// System.out.println("aaaa: " + s);
 		}
 		// 获得收件箱
 		// Folder folder = store.getFolder("INBOX");
@@ -414,11 +526,9 @@ public class MailUtil {
 					flag = hasAttachment(bodyPart);
 				} else {
 					String contentType = bodyPart.getContentType();
-					if (contentType.indexOf("application") != -1) {
-						flag = true;
-					}
-
-					if (contentType.indexOf("name") != -1) {
+					if (contentType.toLowerCase().indexOf("application") > -1
+							|| contentType.toLowerCase().indexOf("name") > -1) //
+					{
 						flag = true;
 					}
 				}
@@ -566,7 +676,8 @@ public class MailUtil {
 					parseAttachment(msg, bodyPart, athmHandler);
 				} else {
 					String contentType = bodyPart.getContentType();
-					if (contentType.indexOf("name") != -1 || contentType.indexOf("application") != -1) //
+					if (contentType.toLowerCase().indexOf("name") > -1
+							|| contentType.toLowerCase().indexOf("application") > -1) //
 					{
 						athmHandler.handleMailAttachment(msg, bodyPart);
 					}

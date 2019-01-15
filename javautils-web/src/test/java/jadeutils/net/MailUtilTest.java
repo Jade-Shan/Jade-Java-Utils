@@ -2,6 +2,7 @@ package jadeutils.net;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -9,12 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.mail.Authenticator;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
-import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Transport;
@@ -38,12 +38,10 @@ import jadeutils.net.email.MailAttachmentHandler;
 import jadeutils.net.email.MailBodyHandler;
 import jadeutils.net.email.MailFolderHandler;
 import jadeutils.net.email.MailUtil;
-import jadeutils.text.HtmlUtil;
 
 public class MailUtilTest {
 
 	/*
-	 * 
 	 * 网易邮箱开通了IMAP后，再心蓝中使用IMAP收件无法正常， <br/> 提示“NO Select Unsafe Login. Please
 	 * contact kefu@188.com for help”。 <br/>
 	 * 第三方客户端收信他们就会认为是不安全的，实则是为了推广他们自己的邮件客户端，实属霸王条款。 <br/> <br/>
@@ -53,94 +51,193 @@ public class MailUtilTest {
 	 * 首先需要先登录网页邮箱，如果是126则自己替换链接中的163。按页面提示，通过手机短信验证之后，出现如下提示: <br/> <br/>
 	 * 您可以继续使用当前客户端收发邮件了，请特别注意个人的电子信息安全哦。感谢您对网易邮箱的支持！就可以正常使用第三方邮件客户端的IMAP功能来收件了。
 	 * <br/>
-	 * 
 	 */
-	// private static final String smtpServer = "smtp.163.com";
-	// private static final String smtpPort = "25";
-	// private static final String smtpSslPort = "994";// 994 or 456
 
-	private static final String email_163 = "test@test.com";
-	private static final String password_163 = "qwer1234";
-	private static final String email_greenmail_FROM = "bar@example.com";
-	private static final String password_greenmail_FROM = "secret-pwd";
-	private static final String email_greenmail_TO = "bar@example.com";
-	private static final String password_greenmail_TO = "secret-pwd";
-
-	private static final Map<String, Properties> SERVER_CFGS = new HashMap<>();
+	// @Rule
+	// public final GreenMailRule greenMail = new GreenMailRule(GREEN_MAIL_SETUP);
+	private GreenMail greenMail = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		Properties p = null;
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.store.protocol", "imap");
-		p.setProperty("mail.imap.ssl.enable", "false");
-		p.setProperty("mail.imap.host", "imap.163.com");
-		p.setProperty("mail.imap.port", "143");
-		SERVER_CFGS.put("163_imap", p);
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.store.protocol", "pop3");
-		p.setProperty("mail.pop3.ssl.enable", "false");
-		p.setProperty("mail.pop3.host", "pop3.163.com");
-		p.setProperty("mail.pop3.port", "110");
-		SERVER_CFGS.put("163_pop3", p);
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.store.protocol", "imap");
-		p.setProperty("mail.imap.ssl.enable", "true");
-		p.setProperty("mail.imap.host", "imap.163.com");
-		p.setProperty("mail.imap.port", "993");
-		p.setProperty("mail.imap.auth.plain.disable", "true");
-		SERVER_CFGS.put("163_imaps", p);
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.store.protocol", "pop3");
-		p.setProperty("mail.pop3.ssl.enable", "true");
-		p.setProperty("mail.pop3.host", "pop3.163.com");
-		p.setProperty("mail.pop3.port", "995");
-		p.setProperty("mail.pop3.auth.plain.disable", "true");
-		SERVER_CFGS.put("163_pop3s", p);
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.smtp.host", "smtp.163.com");
-		p.setProperty("mail.smtp.port", "25");
-		p.setProperty("mail.smtp.socketFactory.port", "25");
-		p.setProperty("mail.smtp.auth", "true");
-		p.setProperty("mail.smtp.socketFactory.class", "SSL_FACTORY");
-		SERVER_CFGS.put("163_smtp", p);
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.store.protocol", "imap");
-		p.setProperty("mail.imap.ssl.enable", "false");
-		p.setProperty("mail.imap.host", "127.0.0.1");
-		p.setProperty("mail.imap.port", "3143");
-		SERVER_CFGS.put("greenmail_imap", p);
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.store.protocol", "pop3");
-		p.setProperty("mail.pop3.ssl.enable", "false");
-		p.setProperty("mail.pop3.host", "127.0.0.1");
-		p.setProperty("mail.pop3.port", "3110");
-		SERVER_CFGS.put("greenmail_pop3", p);
-
-		// 准备连接服务器的会话信息
-		p = new Properties();
-		p.setProperty("mail.smtp.host", "127.0.0.1");
-		p.setProperty("mail.smtp.port", "3025");
-		p.setProperty("mail.smtp.auth", "false");
-		SERVER_CFGS.put("greenmail_smtp", p);
+		initMailCfg();
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		greenMail = new GreenMail(GREEN_MAIL_SETUP);
+		greenMail.start();
+
+		// Create user, as connect verifies pwd
+		greenMail.setUser(email_greenmail_FROM, email_greenmail_FROM, password_greenmail_FROM);
+		greenMail.setUser(email_greenmail_TO, email_greenmail_TO, password_greenmail_TO);
+
+		Session smtpSession = greenMail.getSmtp().createSession();
+
+		Message msg = null;
+		// simple text message
+		msg = new MimeMessage(smtpSession);
+		msg.setFrom(new InternetAddress(email_greenmail_FROM));
+		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email_greenmail_TO));
+		msg.setSubject("Test Pain-Text email");
+		msg.setText("This is Text mail");
+		Transport.send(msg);
+
+		// muti part message
+		msg = new MimeMessage(smtpSession);
+		msg.setFrom(new InternetAddress(email_greenmail_FROM));
+		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email_greenmail_TO));
+		msg.setSubject("Test Muti-Part email");
+		MimeMultipart multipart = new MimeMultipart();
+		final MimeBodyPart part1 = new MimeBodyPart();
+		part1.setContent("Pain-text preview in Muti-Part email", "text/plain;charset=UTF-8");
+		multipart.addBodyPart(part1);
+		final MimeBodyPart part2 = new MimeBodyPart();
+		part2.setContent("<br>HTML Source in  Muti-Part email</br>", "text/html;charset=UTF-8");
+		multipart.addBodyPart(part2);
+		msg.setContent(multipart);
+		Transport.send(msg);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		greenMail.stop();
+	}
+
+	@Test
+	public void testGetGreenMail() throws Exception {
+		String mailTo = email_greenmail_TO;
+		String pwdTo = password_greenmail_TO;
+		Properties mailRcvProp = SERVER_CFGS.get("greenmail_imap");
+
+		// String mailTo = "xxx@163.com";
+		// String pwdTo = "xxx";
+		// Properties mailRcvProp = SERVER_CFGS.get("163_imaps");
+
+		MailUtil.receiveMail(mailRcvProp, mailTo, pwdTo, true, defaultFolderHandler, defaultBodyHandler,
+				defaultAttachmentHandler);
+
+		// Alternative 1: Create session and store or ...
+		Session imapSession = greenMail.getImap().createSession();
+		Store store = imapSession.getStore("imap");
+		store.connect(mailTo, pwdTo);
+		Folder inbox = store.getFolder("INBOX");
+		inbox.open(Folder.READ_ONLY);
+		Message msgReceived = inbox.getMessage(1);
+		assertEquals("Test Pain-Text email", msgReceived.getSubject());
+		store.close();
+
+		// Alternative 2: ... let GreenMail create and configure a store:
+		IMAPStore imapStore = greenMail.getImap().createStore();
+		imapStore.connect(mailTo, pwdTo);
+		inbox = imapStore.getFolder("INBOX");
+		inbox.open(Folder.READ_ONLY);
+		msgReceived = inbox.getMessage(1);
+		assertEquals("Test Pain-Text email", msgReceived.getSubject());
+		imapStore.close();
+
+		// Alternative 3: ... directly fetch sent message using GreenMail API
+		assertEquals(2, greenMail.getReceivedMessagesForDomain(mailTo).length);
+		msgReceived = greenMail.getReceivedMessagesForDomain(mailTo)[0];
+		assertEquals("Test Pain-Text email", msgReceived.getSubject());
+
+	}
+
+	@Test
+	public void testSendGreenMail() throws Exception {
+
+		String mailFrom = email_greenmail_FROM;
+		String pwdFrom = password_greenmail_FROM;
+		String mailTo = email_greenmail_TO;
+		String pwdTo = password_greenmail_TO;
+		Properties mailSendProp = SERVER_CFGS.get("greenmail_smtp");
+		Properties mailRcvProp = SERVER_CFGS.get("greenmail_imap");
+
+		// String mailFrom = "xxx@163.com";
+		// String pwdFrom = "xxx";
+		// Properties mailSendProp = SERVER_CFGS.get("163_smtps");
+		// String mailTo = "xxx@163.com";
+		// String pwdTo = "xxx";
+		// Properties mailRcvProp = SERVER_CFGS.get("163_imaps");
+
+		Map<String, DataSource> attachments = new HashMap<>();
+		attachments.put("Documents.pdf", new FileDataSource(new File("src/test/resources/sample1.pdf")));
+
+		Map<String, DataSource> related = new HashMap<>();
+		related.put("img2.jpg", new FileDataSource(new File("src/test/resources/sample2.jpg")));
+		related.put("img3.jpg", new FileDataSource(new File("src/test/resources/sample3.jpg")));
+
+		String[] toArr = { mailTo };
+		String[] ccArr = {};
+		MailUtil.sendTextMail(mailSendProp, mailFrom, pwdFrom, toArr, ccArr, ccArr, //
+				"包裹3", "李总,您好;你的包裹在前台");
+		MailUtil.sendTextMail(mailSendProp, mailFrom, pwdFrom, toArr, ccArr, ccArr, //
+				"包裹4", "李总,您好;你的包裹在前台", attachments);
+		MailUtil.sendHtmlMail(mailSendProp, mailFrom, pwdFrom, toArr, ccArr, ccArr, //
+				"包裹5", "<h1>李总,您好;你的包裹在前台</h1>", null, null);
+		MailUtil.sendHtmlMail(mailSendProp, mailFrom, pwdFrom, toArr, ccArr, ccArr, //
+				"包裹6", "<h1>李总,您好;你的包裹在前台</h1>" + //
+						"<br><img src='cid:img2.jpg'/><br>" //
+						+ "<img src='cid:img3.jpg'/>",
+				related, attachments);
+
+		IMAPStore imapStore = greenMail.getImap().createStore();
+		imapStore.connect(mailTo, pwdTo);
+		Folder inbox = imapStore.getFolder("INBOX");
+		inbox.open(Folder.READ_ONLY);
+		//
+		Message msgReceived = inbox.getMessage(3);
+		assertEquals("包裹3", msgReceived.getSubject());
+		//
+		msgReceived = inbox.getMessage(4);
+		assertEquals("包裹4", msgReceived.getSubject());
+		//
+		msgReceived = inbox.getMessage(5);
+		assertEquals("包裹5", msgReceived.getSubject());
+		//
+		msgReceived = inbox.getMessage(6);
+		assertEquals("包裹6", msgReceived.getSubject());
+
+		//
+		imapStore.close();
+
+		MailUtil.receiveMail(mailRcvProp, mailTo, pwdTo, true, defaultFolderHandler, defaultBodyHandler,
+				defaultAttachmentHandler);
+	}
+
+	@Test
+	public void testMoveMail() throws Exception {
+		// // String fromStr = "lab-booking-unread";
+		// // String toStr = "lab-booking-success";
+		// String fromStr = "INBOX";
+		// String toStr = "草稿箱";
+		// // 创建Session实例对象
+		// Session session = Session.getInstance(SERVER_CFGS.get("163_imap"));
+		// // 创建IMAP协议的Store对象
+		// Store store = session.getStore("imap");
+		// // 连接邮件服务器
+		// store.connect(email_163, password_163);
+		// // 获得收件箱
+		// Folder from = store.getFolder(fromStr);
+		// from.open(Folder.READ_WRITE);
+		// Folder to = store.getFolder(toStr);
+		// to.open(Folder.READ_WRITE);
+		//
+		// Message[] mails = from.getMessages();
+		// if (null != mails && mails.length > 0) {
+		// String subject = MailUtil.getSubject(mails[0]);
+		// if (subject.indexOf("Move to") > -1) {
+		// Message[] mr = { mails[0] };
+		// from.copyMessages(mr, to);
+		// mails[0].setFlag(Flags.Flag.DELETED, true);// 设置已删除状态为true
+		// }
+		// }
+		// from.close(true); // ture表示对标记了删除记录的邮件实施删除操作
+		// to.close(true);
+		// store.close();
 	}
 
 	private MailFolderHandler defaultFolderHandler = new MailFolderHandler() {
@@ -219,12 +316,19 @@ public class MailUtilTest {
 				String subject = URLEncoder.encode(MailUtil.getSubject(msg), "UTF-8");
 				String filename = URLEncoder.encode(MailUtil.decodeText(//
 						bodyPart.getFileName()), "UTF-8");
-				FileOperater.writeFile("/mailtmp/", subject + "_" + filename, is);
+				FileOperater.writeFile("/mailtmp/", System.currentTimeMillis() + "." + subject + "_" + filename, is);
 			} catch (Exception e) {
 				throw new IOException(e.getMessage());
 			}
 		}
 	};
+
+	private static final String email_greenmail_FROM = "bar@example.com";
+	private static final String password_greenmail_FROM = "secret-pwd";
+	private static final String email_greenmail_TO = "foo@example.com";
+	private static final String password_greenmail_TO = "secret-pwd";
+
+	private static final Map<String, Properties> SERVER_CFGS = new HashMap<>();
 
 	private ServerSetup[] GREEN_MAIL_SETUP = { //
 			new ServerSetup(3025, "localhost", "smtp"), //
@@ -235,170 +339,82 @@ public class MailUtilTest {
 			new ServerSetup(3993, "localhost", "imaps") //
 	};
 
-	// @Rule
-	// public final GreenMailRule greenMail = new GreenMailRule(GREEN_MAIL_SETUP);
-	private GreenMail greenMail = null;
+	private static void initMailCfg() {
+		Properties p = null;
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.store.protocol", "imap");
+		p.setProperty("mail.imap.ssl.enable", "false");
+		p.setProperty("mail.imap.host", "imap.163.com");
+		p.setProperty("mail.imap.port", "143");
+		SERVER_CFGS.put("163_imap", p);
 
-	@Before
-	public void setUp() throws Exception {
-		greenMail = new GreenMail(GREEN_MAIL_SETUP);
-		greenMail.start();
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.store.protocol", "pop3");
+		p.setProperty("mail.pop3.ssl.enable", "false");
+		p.setProperty("mail.pop3.host", "pop3.163.com");
+		p.setProperty("mail.pop3.port", "110");
+		SERVER_CFGS.put("163_pop3", p);
 
-		// Create user, as connect verifies pwd
-		greenMail.setUser(email_greenmail_FROM, email_greenmail_FROM, password_greenmail_FROM);
-		greenMail.setUser(email_greenmail_TO, email_greenmail_TO, password_greenmail_TO);
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.store.protocol", "imap");
+		p.setProperty("mail.imap.ssl.enable", "true");
+		p.setProperty("mail.imap.host", "imap.163.com");
+		p.setProperty("mail.imap.port", "993");
+		p.setProperty("mail.imap.auth.plain.disable", "true");
+		SERVER_CFGS.put("163_imaps", p);
 
-		Session smtpSession = greenMail.getSmtp().createSession();
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.store.protocol", "pop3");
+		p.setProperty("mail.pop3.ssl.enable", "true");
+		p.setProperty("mail.pop3.host", "pop3.163.com");
+		p.setProperty("mail.pop3.port", "995");
+		p.setProperty("mail.pop3.auth.plain.disable", "true");
+		SERVER_CFGS.put("163_pop3s", p);
 
-		Message msg = null;
-		// simple text message
-		msg = new MimeMessage(smtpSession);
-		msg.setFrom(new InternetAddress(email_greenmail_FROM));
-		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email_greenmail_TO));
-		msg.setSubject("Test Pain-Text email");
-		msg.setText("This is Text mail");
-		Transport.send(msg);
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.smtp.host", "smtp.163.com");
+		p.setProperty("mail.smtp.port", "25");
+		// p.setProperty("mail.smtp.socketFactory.port", "25");
+		p.setProperty("mail.smtp.auth", "true");
+		// p.setProperty("mail.smtp.socketFactory.class", "SSL_FACTORY");
+		SERVER_CFGS.put("163_smtp", p);
 
-		// muti part message
-		msg = new MimeMessage(smtpSession);
-		msg.setFrom(new InternetAddress(email_greenmail_FROM));
-		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email_greenmail_TO));
-		msg.setSubject("Test Muti-Part email");
-		MimeMultipart multipart = new MimeMultipart();
-		final MimeBodyPart part1 = new MimeBodyPart();
-		part1.setContent("Pain-text preview in Muti-Part email", "text/plain;charset=UTF-8");
-		multipart.addBodyPart(part1);
-		final MimeBodyPart part2 = new MimeBodyPart();
-		part2.setContent("<br>HTML Source in  Muti-Part email</br>", "text/html;charset=UTF-8");
-		multipart.addBodyPart(part2);
-		msg.setContent(multipart);
-		Transport.send(msg);
-	}
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.smtp.host", "smtp.163.com");
+		p.setProperty("mail.smtp.port", "465");
+		p.setProperty("mail.smtp.socketFactory.port", "465");
+		p.setProperty("mail.smtp.auth", "true");
+		p.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		p.setProperty("mail.smtp.socketFactory.fallback", "false");
+		SERVER_CFGS.put("163_smtps", p);
 
-	@After
-	public void tearDown() throws Exception {
-		greenMail.stop();
-	}
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.store.protocol", "imap");
+		p.setProperty("mail.imap.ssl.enable", "false");
+		p.setProperty("mail.imap.host", "127.0.0.1");
+		p.setProperty("mail.imap.port", "3143");
+		SERVER_CFGS.put("greenmail_imap", p);
 
-	@Test
-	public void testGetGreenMail() throws Exception {
-		MailUtil.receiveMail(SERVER_CFGS.get("greenmail_imap"), email_greenmail_TO, password_greenmail_TO, true,
-				defaultFolderHandler, defaultBodyHandler, defaultAttachmentHandler);
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.store.protocol", "pop3");
+		p.setProperty("mail.pop3.ssl.enable", "false");
+		p.setProperty("mail.pop3.host", "127.0.0.1");
+		p.setProperty("mail.pop3.port", "3110");
+		SERVER_CFGS.put("greenmail_pop3", p);
 
-		// Alternative 1: Create session and store or ...
-		Session imapSession = greenMail.getImap().createSession();
-		Store store = imapSession.getStore("imap");
-		store.connect(email_greenmail_TO, password_greenmail_TO);
-		Folder inbox = store.getFolder("INBOX");
-		inbox.open(Folder.READ_ONLY);
-		Message msgReceived = inbox.getMessage(1);
-		assertEquals("Test Pain-Text email", msgReceived.getSubject());
-		store.close();
-
-		// Alternative 2: ... let GreenMail create and configure a store:
-		IMAPStore imapStore = greenMail.getImap().createStore();
-		imapStore.connect(email_greenmail_TO, password_greenmail_TO);
-		inbox = imapStore.getFolder("INBOX");
-		inbox.open(Folder.READ_ONLY);
-		msgReceived = inbox.getMessage(1);
-		assertEquals("Test Pain-Text email", msgReceived.getSubject());
-		imapStore.close();
-
-		// Alternative 3: ... directly fetch sent message using GreenMail API
-		assertEquals(2, greenMail.getReceivedMessagesForDomain(email_greenmail_TO).length);
-		msgReceived = greenMail.getReceivedMessagesForDomain(email_greenmail_TO)[0];
-		assertEquals("Test Pain-Text email", msgReceived.getSubject());
-
-	}
-
-	@Test
-	public void testSendGreenMail() throws Exception {
-
-		// Session smtpSession = Session.getInstance(SERVER_CFGS.get("greenmail_smtp"),
-		// new Authenticator() {
-		// // 设置认证账户信息
-		// @Override
-		// protected PasswordAuthentication getPasswordAuthentication() {
-		// return new PasswordAuthentication(email_greenmail_FROM,
-		// password_greenmail_FROM);
-		// }
-		// });
-		// smtpSession.setDebug(true);
-		// System.out.println("创建邮件");
-		// MimeMessage message = new MimeMessage(smtpSession);
-		// // 发件人
-		// message.setFrom(new InternetAddress(email_greenmail_FROM));
-		// // 收件人和抄送人
-		// message.setRecipients(Message.RecipientType.TO, email_greenmail_TO);
-		// // message.setRecipients(Message.RecipientType.CC, MY_EMAIL_ACCOUNT);
-		//
-		// // muti part message
-		// message = new MimeMessage(smtpSession);
-		// message.setFrom(new InternetAddress(email_greenmail_FROM));
-		// message.addRecipient(Message.RecipientType.TO, new
-		// InternetAddress(email_greenmail_TO));
-		// message.setSubject("包裹");
-		// MimeMultipart multipart = new MimeMultipart();
-		// final MimeBodyPart part1 = new MimeBodyPart();
-		// part1.setContent("李总,您好;你的包裹在前台", "text/plain;charset=UTF-8");
-		// multipart.addBodyPart(part1);
-		// final MimeBodyPart part2 = new MimeBodyPart();
-		// part2.setContent("<h1>李总,您好;你的包裹在前台</h1>", "text/html;charset=UTF-8");
-		// multipart.addBodyPart(part2);
-		// message.setContent(multipart);
-		// Transport.send(message);
-
-		String[] toArr = { email_greenmail_TO };
-		String[] ccArr = {};
-		MailUtil.sendHtmlMail(SERVER_CFGS.get("greenmail_smtp"), email_greenmail_FROM, password_greenmail_FROM, toArr,
-				ccArr, ccArr, "包裹1", "<h1>李总,您好;你的包裹在前台</h1>");
-		MailUtil.sendTextMail(SERVER_CFGS.get("greenmail_smtp"), email_greenmail_FROM, password_greenmail_FROM, toArr,
-				ccArr, ccArr, "包裹2", "李总,您好;你的包裹在前台");
-
-		IMAPStore imapStore = greenMail.getImap().createStore();
-		imapStore.connect(email_greenmail_TO, password_greenmail_TO);
-		Folder inbox = imapStore.getFolder("INBOX");
-		inbox.open(Folder.READ_ONLY);
-		Message msgReceived = inbox.getMessage(3);
-		assertEquals("包裹1", msgReceived.getSubject());
-		msgReceived = inbox.getMessage(4);
-		assertEquals("包裹2", msgReceived.getSubject());
-		imapStore.close();
-
-		MailUtil.receiveMail(SERVER_CFGS.get("greenmail_imap"), email_greenmail_TO, password_greenmail_TO, true,
-				defaultFolderHandler, defaultBodyHandler, defaultAttachmentHandler);
-
-	}
-
-	@Test
-	public void testMoveMail() throws Exception {
-		// // String fromStr = "lab-booking-unread";
-		// // String toStr = "lab-booking-success";
-		// String fromStr = "INBOX";
-		// String toStr = "草稿箱";
-		// // 创建Session实例对象
-		// Session session = Session.getInstance(SERVER_CFGS.get("163_imap"));
-		// // 创建IMAP协议的Store对象
-		// Store store = session.getStore("imap");
-		// // 连接邮件服务器
-		// store.connect(email_163, password_163);
-		// // 获得收件箱
-		// Folder from = store.getFolder(fromStr);
-		// from.open(Folder.READ_WRITE);
-		// Folder to = store.getFolder(toStr);
-		// to.open(Folder.READ_WRITE);
-		//
-		// Message[] mails = from.getMessages();
-		// if (null != mails && mails.length > 0) {
-		// String subject = MailUtil.getSubject(mails[0]);
-		// if (subject.indexOf("Move to") > -1) {
-		// Message[] mr = { mails[0] };
-		// from.copyMessages(mr, to);
-		// mails[0].setFlag(Flags.Flag.DELETED, true);// 设置已删除状态为true
-		// }
-		// }
-		// from.close(true); // ture表示对标记了删除记录的邮件实施删除操作
-		// to.close(true);
-		// store.close();
+		// 准备连接服务器的会话信息
+		p = new Properties();
+		p.setProperty("mail.smtp.host", "127.0.0.1");
+		p.setProperty("mail.smtp.port", "3025");
+		p.setProperty("mail.smtp.auth", "false");
+		SERVER_CFGS.put("greenmail_smtp", p);
 	}
 }

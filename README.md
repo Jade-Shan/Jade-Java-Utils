@@ -24,18 +24,18 @@ jadeutils-base:
 * :sparkles: add sigar   to monitar system status 
 * :bug: BUG: `ShellUtil`use new thread to process output steam and error steam.
 
-jadeutils-web:
-
-* :sparkles: mail util receive imap pop3 by SSL 
-* :sparkles: mail util send email no SSL
-* :sparkles: mail util send email by SSL
-
 ## v0.1.20-SNAPSHOT
 
 
 jadeutils-base:
 
 * :sparkles: text util for parse HTML to Formatted text
+
+jadeutils-web:
+
+* :sparkles: mail util receive imap pop3 by SSL 
+* :sparkles: mail util send email no SSL
+* :sparkles: mail util send email by SSL
 
 
 

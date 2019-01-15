@@ -1,25 +1,9 @@
 package jadeutils.text;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import jadeutils.base.DateCaculater;
-import jadeutils.base.ShellUtil;
-import jadeutils.base.ShellUtil.DefaultStreamHandler;
-import jadeutils.base.ShellUtil.SysExecResult;
-import jadeutils.text.TextTempletRanderTool;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
