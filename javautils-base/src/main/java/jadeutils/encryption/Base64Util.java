@@ -808,7 +808,7 @@ public class Base64Util {
 	 * 
 	 * @param len
 	 *            The length of characters to decode
-	 * @param options
+	 * @param options options
 	 * 
 	 * @return decoded data
 	 * 
@@ -1584,7 +1584,7 @@ public class Base64Util {
 		 * Method added by PHIL. [Thanks, PHIL. -Rob] This pads the buffer without
 		 * closing the stream.
 		 * 
-		 * @throws java.io.IOException
+		 * @throws java.io.IOException io exception
 		 */
 		public void flushBase64() throws java.io.IOException {
 			if (position > 0) {
@@ -1618,7 +1618,7 @@ public class Base64Util {
 		 * Suspends encoding of the stream. May be helpful if you need to embed a piece
 		 * of base640-encoded data in a stream.
 		 * 
-		 * @throws java.io.IOException
+		 * @throws java.io.IOException io exception
 		 */
 		public void suspendEncoding() throws java.io.IOException {
 			flushBase64();

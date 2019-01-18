@@ -4,20 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * html 转为纯文本 保留格式
  * 
- * @Function: html 转为纯文本 保留格式
- * 
- * 
- * @Author: zhangZhiPeng
- * 
- * @Date: 2013-10-29
- * 
- * @Modifications:
- * 
- * @Modifier Name; Date; The Reason for Modifying
- *
- * 
- * 
+ * @author: zhangZhiPeng
  */
 public class HtmlUtil {
 

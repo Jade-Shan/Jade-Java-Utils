@@ -198,8 +198,8 @@ public class MailUtil {
 	 *            bccArr
 	 * @param subject
 	 *            subject
-	 * @param text
-	 *            text
+	 * @param html
+	 *            html
 	 * @param related
 	 *            related attachments
 	 * @param attachments
