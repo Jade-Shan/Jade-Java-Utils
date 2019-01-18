@@ -30,6 +30,7 @@ jadeutils-base:
 jadeutils-base:
 
 * :sparkles: text util for parse HTML to Formatted text
+* :sparkles: Base64Util V2
 
 jadeutils-web:
 

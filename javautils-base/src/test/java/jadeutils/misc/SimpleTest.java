@@ -22,9 +22,7 @@ import org.mockito.Mockito;
 
 /**
  *
- * @author
  * @version 0.1
- * @date 2012-5-5
  *
  */
 public class SimpleTest {
