@@ -1,14 +1,14 @@
 package jadeutils.net.http;
 
-import jadeutils.encryption.Base64;
-import jadeutils.net.SocketPool;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.URL;
+import java.util.Base64;
 
 import javax.net.SocketFactory;
+
+import jadeutils.net.SocketPool;
 
 public class HttpParam {
 	SocketFactory sf;
@@ -50,9 +50,9 @@ public class HttpParam {
 				proxyAuth = null;
 			} else {
 				String password = httpProxy.getPassword();
-				proxyAuth = "Basic "
-						+ Base64.encode((username + ":" + (password == null ? ""
-								: password)).getBytes());
+				proxyAuth = "Basic " + Base64.getEncoder()
+						.encodeToString((username + ":" + 
+							(password == null ? "" : password)).getBytes());
 			}
 		}
 	}
