@@ -42,13 +42,9 @@ import jadeutils.text.HtmlUtil;
  * POP3协议允许电子邮件客户端下载服务器上的邮件,但是在客户端的操作(如移动邮件、标记已读等),不会反馈到服务器上,
  * 
  * 比如通过客户端收取了邮箱中的3封邮件并移动到其它文件夹,邮箱服务器上的这些邮件是没有同时被移动的。
- *
- * 
  * 
  * IMAP协议提供webmail与电子邮件客户端之间的双向通信,客户端的操作都会同步反应到服务器上,对邮件进行的操作,服务
  * 上的邮件也会做相应的动作。比如在客户端收取了邮箱中的3封邮件,并将其中一封标记为已读,将另外两封标记为删除,这些操作会 即时反馈到服务器上。
- *
- * 
  * 
  * 两种协议相比,IMAP 整体上为用户带来更为便捷和可靠的体验。POP3更易丢失邮件或多次下载相同的邮件,但IMAP通过邮件客户端
  * 与webmail之间的双向同步功能很好地避免了这些问题。
@@ -147,6 +143,24 @@ public class MailUtil {
 			}
 		});
 		try {
+			// 邮件头
+			// =================================================================
+			// 域名 | 含义 | 添加者
+			// Received | 传输路径 | 各级邮件服务器
+			// Return-Path | 回复地址 | 目标邮件服务器
+			// Delivered-To | 发送地址 | 目标邮件服务器
+			// Reply-To | 回复地址 | 邮件的创建者
+			// From | 发件人地址 | 邮件的创建者
+			// To | 收件人地址 | 邮件的创建者
+			// Cc | 抄送地址 | 邮件的创建者
+			// Bcc | 暗送地址 | 邮件的创建者
+			// Date | 日期和时间 | 邮件的创建者
+			// Subject | 主题 | 邮件的创建者
+			// Message-ID | 消息ID | 邮件的创建者
+			// MIME-Version | MIME版本 | 邮件的创建者
+			// Content-Type | 内容的类型 | 邮件的创建者
+			// Content-Transfer-Encoding | 内容的传输编码方式 | 邮件的创建者
+
 			Message msg = null;
 			msg = new MimeMessage(smtpSession);
 			msg.setFrom(new InternetAddress(email));
@@ -161,6 +175,11 @@ public class MailUtil {
 			}
 			msg.setSubject(subject);
 
+			// multipart/mixed
+			// ..* 纯文本正文
+			// ..* 附件
+			// ..* 附件
+			// ..* ...
 			MimeMultipart multipart = new MimeMultipart();
 			MimeBodyPart part0 = new MimeBodyPart();
 			part0.setContent(text, "text/plain;charset=UTF-8");
@@ -172,6 +191,7 @@ public class MailUtil {
 					pat.setFileName(ath.getKey());
 					multipart.addBodyPart(pat);
 				}
+				// 如果在邮件中要添加附件，必须定义multipart/mixed段
 				multipart.setSubType("mixed");
 			}
 			msg.setContent(multipart);
@@ -232,6 +252,24 @@ public class MailUtil {
 			}
 			msg.setSubject(subject);
 
+			// multipart/mixed
+			// ..* multipart/related
+			// ......- mutipart/alternative
+			// ..........+ 纯文本正文
+			// ..........+ 超文本正文
+			// ......- 内嵌资源
+			// ......- 内嵌资源
+			// ......- ...
+			// ..* 附件
+			// ..* 附件
+			// ..* ...
+			//
+			// 如果在邮件中要添加附件，必须定义multipart/mixed段；
+			// 如果存在内嵌资源，至少要定义multipart/related段；
+			// 如果纯文本与超文本共存，至少要定义multipart/alternative段。
+			// 什么是“至少”？举个例子说，如果只有纯文本与超文本正文，
+			// 那么在邮件头中将类型扩大化，定义为multipart/related，
+			// 甚至multipart/mixed，都是允许的。
 			//
 			MimeMultipart pageMulti = new MimeMultipart();
 			MimeBodyPart pageBody = new MimeBodyPart();
@@ -261,19 +299,19 @@ public class MailUtil {
 				}
 				contentMulti.setSubType("mixed");
 			}
-			
+
 			//
 			MimeBodyPart mmBody = new MimeBodyPart();
 			mmBody.setContent(contentMulti);
 			MimeMultipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mmBody);
 
-//			MimeMultipart textMulti = new MimeMultipart();
+			// MimeMultipart textMulti = new MimeMultipart();
 			MimeBodyPart textBody = new MimeBodyPart();
 			String text = HtmlUtil.html2text(html);
 			textBody.setContent(text, "text/plain;charset=UTF-8");
 			multipart.addBodyPart(textBody);
-//			textMulti.addBodyPart(textBody);
+			// textMulti.addBodyPart(textBody);
 
 			msg.setContent(multipart);
 			Transport.send(msg);
