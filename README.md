@@ -13,6 +13,7 @@ update log
 ## In Process
 
 * :sparkles: har utils: add project but not link to base util pom.
+* :sparkles: add custom dns resolver.
 
 Base pom:
 
