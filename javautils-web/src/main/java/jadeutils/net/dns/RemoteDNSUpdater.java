@@ -4,6 +4,8 @@ import jadeutils.encryption.ByteArrayQueue;
 import jadeutils.net.http.HttpPool;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,8 @@ import org.json.JSONObject;
 public class RemoteDNSUpdater implements DNSUpdater {
 	private HttpPool addrApi = null;
 
-	public RemoteDNSUpdater(String url, int timeout) {
-		addrApi = new HttpPool("http://localhost:8383/addr.jsp", timeout);
+	public RemoteDNSUpdater(String url, int timeout) throws MalformedURLException {
+		addrApi = new HttpPool(new URL(url), timeout);
 	}
 
 	@Override
