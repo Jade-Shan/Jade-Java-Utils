@@ -1,29 +1,30 @@
 package jadeutils.net.http;
 
-import jadeutils.encryption.ByteArrayQueue;
-import jadeutils.net.SocketPool;
-
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
+
+import jadeutils.encryption.ByteArrayQueue;
+import jadeutils.net.SocketPool;
 
 public class HttpPool extends SocketPool {
 	private String path_, host, proxyAuth;
 
 	private HttpPool(HttpParam param, int timeout) {
-		super(param.sf, param.sa, timeout);
+		super(param.socketFactory, param.socketAddress, timeout);
 		path_ = param.path;
 		host = param.host;
 		proxyAuth = param.proxyAuth;
 	}
 
-	public HttpPool(String url, int timeout) {
+	public HttpPool(URL url, int timeout) {
 		this(null, url, timeout);
 	}
 
-	public HttpPool(HttpProxy httpProxy, String url, int timeout) {
-		this(new HttpParam(httpProxy, url), timeout);
+	public HttpPool(HttpProxy httpProxy, URL url, int timeout) {
+		this(new HttpParam(httpProxy, url, null), timeout);
 	}
 
 	private int request(String path, ByteArrayQueue requestBody,

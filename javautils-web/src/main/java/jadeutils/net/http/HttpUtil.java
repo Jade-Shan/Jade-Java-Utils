@@ -7,18 +7,23 @@ import jadeutils.encryption.Streams;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
+
+import org.apache.http.conn.DnsResolver;
 
 public class HttpUtil {
 	private static final int RESP_MAX_SIZE = 65536;
 	private static final String HEX_DIGITS = "0123456789ABCDEF";
 
 	private static void copyResponse(InputStream in, ByteArrayQueue baq,
-			byte[] buffer, int length) throws IOException {
+			byte[] buffer, int length) throws IOException //
+	{
 		int bytesToRead = length;
 		while (bytesToRead > 0) {
 			int bytesRead = in.read(buffer, 0,
@@ -51,7 +56,8 @@ public class HttpUtil {
 	static void send(OutputStream out, String path, String host,
 			String proxyAuth, ByteArrayQueue requestBody,
 			Map<String, List<String>> requestHeaders, boolean head)
-			throws IOException {
+			throws IOException //
+	{
 		ByteArrayQueue headerBaq = new ByteArrayQueue();
 		if (requestBody == null) {
 			headerBaq.add(head ? HEAD : GET).add(path.getBytes()).add(HTTP11);
@@ -84,7 +90,8 @@ public class HttpUtil {
 
 	public static int recv(InputStream in, ByteArrayQueue responseBody,
 			Map<String, List<String>> responseHeaders, boolean head,
-			boolean[] connectionClose) throws IOException {
+			boolean[] connectionClose) throws IOException //
+	{
 		// Response Header
 		boolean gzip = false, close = false;
 		int status = 0, contentLength = 0;
@@ -226,77 +233,87 @@ public class HttpUtil {
 			Map<String, List<String>> requestHeaders, boolean head,
 			ByteArrayQueue responseBody,
 			Map<String, List<String>> responseHeaders, boolean[] connectionClose)
-			throws IOException {
+			throws IOException //
+	{
 		send(socket.getOutputStream(), path, host, proxyAuth, requestBody,
 				requestHeaders, head);
 		return recv(socket.getInputStream(), responseBody, responseHeaders,
 				head, connectionClose);
 	}
 
-	private static int request(HttpProxy httpProxy, String url,
-			ByteArrayQueue requestBody,
+	private static int request(HttpProxy httpProxy, DnsResolver resolver, //
+			String href, ByteArrayQueue requestBody,
 			Map<String, List<String>> requestHeaders, boolean head,
 			ByteArrayQueue responseBody,
 			Map<String, List<String>> responseHeaders, int timeout)
-			throws IOException {
-		HttpParam param = new HttpParam(httpProxy, url);
-		try (Socket socket = param.sf.createSocket()) {
+			throws IOException //
+	{
+		URL url = new URL(href);
+		InetAddress address = resolver.resolve(url.getHost())[0];
+		HttpParam param = new HttpParam(httpProxy, url, address);
+		try (Socket socket = param.socketFactory.createSocket()) {
 			socket.setSoTimeout(timeout);
-			socket.connect(param.sa);
+			socket.connect(param.socketAddress);
 			return request(socket, param.path, param.host, param.proxyAuth,
 					requestBody, requestHeaders, head, responseBody,
 					responseHeaders, null);
 		}
 	}
 
-	public static int head(String url,
+	public static int head(DnsResolver resolver, String url,
 			Map<String, List<String>> requestHeaders,
 			Map<String, List<String>> responseHeaders, int timeout)
-			throws IOException {
-		return head(null, url, requestHeaders, responseHeaders, timeout);
+			throws IOException //
+	{
+		return head(null, resolver, url, requestHeaders, responseHeaders, timeout);
 	}
 
-	public static int get(String url, Map<String, List<String>> requestHeaders,
+	public static int get(DnsResolver resolver, String url, Map<String, List<String>> requestHeaders,
 			ByteArrayQueue responseBody,
 			Map<String, List<String>> responseHeaders, int timeout)
-			throws IOException {
-		return get(null, url, requestHeaders, responseBody, responseHeaders,
+			throws IOException //
+	{
+		return get(null, resolver, url, requestHeaders, responseBody, responseHeaders,
 				timeout);
 	}
 
-	public static int post(String url, ByteArrayQueue requestBody,
+	public static int post(DnsResolver resolver, String url, ByteArrayQueue requestBody,
 			Map<String, List<String>> requestHeaders,
 			ByteArrayQueue responseBody,
 			Map<String, List<String>> responseHeaders, int timeout)
-			throws IOException {
-		return post(null, url, requestBody, requestHeaders, responseBody,
+			throws IOException //
+	{
+		return post(null, resolver, url, requestBody, requestHeaders, responseBody,
 				responseHeaders, timeout);
 	}
 
-	public static int head(HttpProxy httpProxy, String url,
+	public static int head(HttpProxy httpProxy, DnsResolver resolver, String url,
 			Map<String, List<String>> requestHeaders,
 			Map<String, List<String>> responseHeaders, int timeout)
-			throws IOException {
-		return request(httpProxy, url, null, requestHeaders, true, null,
+			throws IOException //
+	{
+		return request(httpProxy, resolver, url, null, requestHeaders, true, null,
 				responseHeaders, timeout);
 	}
 
-	public static int get(HttpProxy httpProxy, String url,
+	public static int get(HttpProxy httpProxy, DnsResolver resolver, String url,
 			Map<String, List<String>> requestHeaders,
 			ByteArrayQueue responseBody,
 			Map<String, List<String>> responseHeaders, int timeout)
-			throws IOException {
-		return request(httpProxy, url, null, requestHeaders, false,
+			throws IOException //
+	{
+		return request(httpProxy, resolver, url, null, requestHeaders, false,
 				responseBody, responseHeaders, timeout);
 	}
 
-	public static int post(HttpProxy httpProxy, String url,
+	public static int post(HttpProxy httpProxy, DnsResolver resolver, String url,
 			ByteArrayQueue requestBody,
 			Map<String, List<String>> requestHeaders,
 			ByteArrayQueue responseBody,
 			Map<String, List<String>> responseHeaders, int timeout)
-			throws IOException {
-		return request(httpProxy, url, requestBody, requestHeaders, false,
+			throws IOException //
+	{
+		return request(httpProxy, resolver, url, requestBody, requestHeaders, false,
 				responseBody, responseHeaders, timeout);
 	}
 }

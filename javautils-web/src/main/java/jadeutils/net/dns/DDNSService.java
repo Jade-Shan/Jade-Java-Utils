@@ -9,6 +9,7 @@ import java.io.StringWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -282,7 +283,7 @@ public class DDNSService {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MalformedURLException {
 		int port = 53;
 		String apiAddr = "http://localhost:8383/addr.jsp";
 		int apiTimeout = 10_000;
