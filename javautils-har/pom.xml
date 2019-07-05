@@ -6,7 +6,7 @@
 
 	<groupId>net.jade-dungeon</groupId>
 	<artifactId>javautils-har</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Jadeutil HAR Tool</name>
 	<url></url>
 

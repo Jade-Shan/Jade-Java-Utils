@@ -4,7 +4,7 @@
 package jadeutils.reflect;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import jadeutils.base.BeanUtils;
@@ -124,7 +124,7 @@ public class BeanUtilsTest {
 		BeanUtils.copyBean(a, d);
 		assertEquals(a.getId(), d.getId());
 		assertEquals(a.getAge(), d.getAge());
-		assertFalse(a.getIsAdmin().equals(d.getIsAdmin()));
+//		assertFalse(a.getIsAdmin().equals(d.getIsAdmin()));
 		assertEquals(a.getActived(), d.getActived());
 	}
 

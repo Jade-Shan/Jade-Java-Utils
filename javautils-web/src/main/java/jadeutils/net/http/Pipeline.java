@@ -5,10 +5,14 @@ import jadeutils.encryption.ByteArrayQueue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.apache.http.conn.DnsResolver;
 
 public class Pipeline {
 	public static class Request {
@@ -106,18 +110,21 @@ public class Pipeline {
 		}
 	}
 
-	public static void pipeline(String url, List<Request> requests,
+	public static void pipeline(DnsResolver resolver, String url, List<Request> requests,
 			List<Response> responses, int timeout) throws IOException {
-		pipeline(null, url, requests, responses, timeout);
+		pipeline(null, resolver, url, requests, responses, timeout);
 	}
 
-	public static void pipeline(HttpProxy httpProxy, String url,
+	public static void pipeline(HttpProxy httpProxy, DnsResolver resolver, String href,
 			List<Request> requests, List<Response> responses, int timeout)
-			throws IOException {
-		HttpParam param = new HttpParam(httpProxy, url);
-		try (Socket socket = param.sf.createSocket()) {
+			throws IOException //
+	{
+		URL url = new URL(href);
+		InetAddress address = resolver.resolve(url.getHost())[0];
+		HttpParam param = new HttpParam(httpProxy, url, address);
+		try (Socket socket = param.socketFactory.createSocket()) {
 			socket.setSoTimeout(timeout);
-			socket.connect(param.sa);
+			socket.connect(param.socketAddress);
 			pipeline(socket, param.host, requests, responses, null);
 		}
 	}

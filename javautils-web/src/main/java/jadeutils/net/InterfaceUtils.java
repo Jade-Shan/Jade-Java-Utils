@@ -10,10 +10,22 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 public class InterfaceUtils {
+	
+	public static byte[] parseIpv4ToByts(String ipv4Str) {
+         byte[] ipv4addr = {0, 0, 0, 0};
+		 String[] ipv4StrArr = ipv4Str.split("\\.");
+         ipv4addr[0] = (byte) Integer.parseInt(ipv4StrArr[0]);
+         ipv4addr[1] = (byte) Integer.parseInt(ipv4StrArr[1]);
+         ipv4addr[2] = (byte) Integer.parseInt(ipv4StrArr[2]);
+         ipv4addr[3] = (byte) Integer.parseInt(ipv4StrArr[3]);
+         return ipv4addr;
+	}
 	/**
 	 * 获取本地IP地址
 	 *
-	 * @throws SocketException
+	 * @return return local ip address
+	 * @throws UnknownHostException unkno host
+	 * @throws SocketException socket err
 	 */
 	public static String getLocalIP() throws UnknownHostException,
 			SocketException //
@@ -113,7 +125,9 @@ public class InterfaceUtils {
 
 
 	/**
-	 * 获取本地Host名称
+	 * get local host name
+	 * @return local host name
+	 * @throws UnknownHostException unknow host
 	 */
 	public static String getLocalHostName() throws UnknownHostException {
 		return InetAddress.getLocalHost().getHostName();

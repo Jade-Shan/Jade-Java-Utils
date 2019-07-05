@@ -1,11 +1,11 @@
 package jadeutils.net;
 
-import jadeutils.net.dns.FakeDnsResolver;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.http.client.ClientProtocolException;
@@ -26,11 +26,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import jadeutils.net.dns.FakeResolver;
+
 public class HTTPProxyTest {
 
 	// 配置文件位置
 	private static final String CONF_FILE_PROP = "http-proxy.properties";
 	private static Properties prop = new Properties();
+	
+	private FakeResolver resolver = null;;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -46,6 +50,9 @@ public class HTTPProxyTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Map<String, String> map = new HashMap<>();
+		map.put("this-host.me", "127.0.0.1");
+		this.resolver = new FakeResolver(map, false);
 	}
 
 	@After
@@ -65,7 +72,7 @@ public class HTTPProxyTest {
 						new ProxySSLSocketFactory(SSLContexts
 								.createSystemDefault())).build();
 		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(
-				reg, new FakeDnsResolver());
+				reg, resolver);
 		CloseableHttpClient httpclient = HttpClients.custom()
 				.setConnectionManager(cm).build();
 		try {

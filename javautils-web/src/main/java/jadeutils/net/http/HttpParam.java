@@ -1,48 +1,46 @@
 package jadeutils.net.http;
 
-import jadeutils.encryption.Base64;
-import jadeutils.net.SocketPool;
-
-import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.URL;
+import java.util.Base64;
 
 import javax.net.SocketFactory;
 
+import jadeutils.net.SocketPool;
+
 public class HttpParam {
-	SocketFactory sf;
-	SocketAddress sa;
+	SocketFactory socketFactory;
+	SocketAddress socketAddress;
 	String path, host, proxyAuth;
 
-	HttpParam(HttpProxy httpProxy, String url) {
+	HttpParam(HttpProxy httpProxy, URL url, InetAddress address) {
 		if (httpProxy == null) {
 			try {
-				URL url_ = new URL(url);
-				int port = url_.getPort();
-				String query = url_.getQuery();
-				sf = SocketPool.getSocketFactory(url_.getProtocol().equals(
-						"https"));
-				sa = new InetSocketAddress(url_.getHost(),
-						port == -1 ? url_.getDefaultPort() : port);
-				path = url_.getPath() + (query == null ? "" : "?" + query);
-				host = url_.getHost() + (port == -1 ? "" : ":" + port);
-			} catch (IOException e) {
-				sf = SocketPool.getSocketFactory(false);
-				sa = new InetSocketAddress("localhost", 80);
+				int port = url.getPort();
+				String query = url.getQuery();
+				socketFactory = SocketPool.getSocketFactory(//
+						url.getProtocol().equals("https"));
+				socketAddress = new InetSocketAddress(//
+						address, port == -1 ? url.getDefaultPort() : port);
+				path = url.getPath() + (query == null ? "" : "?" + query);
+				host = url.getHost() + (port == -1 ? "" : ":" + port);
+			} catch (Exception e) {
+				socketFactory = SocketPool.getSocketFactory(false);
+				socketAddress = new InetSocketAddress("localhost", 80);
 				path = "/";
 				host = "localhost";
 			}
 			proxyAuth = null;
 		} else {
-			sf = SocketPool.getSocketFactory(false);
-			sa = httpProxy.getSocketAddress();
-			path = url;
+			socketFactory = SocketPool.getSocketFactory(false);
+			socketAddress = httpProxy.getSocketAddress();
+			path = url.getRef();
 			try {
-				URL url_ = new URL(url);
-				int port = url_.getPort();
-				host = url_.getHost() + (port == -1 ? "" : ":" + port);
-			} catch (IOException e) {
+				int port = url.getPort();
+				host = url.getHost() + (port == -1 ? "" : ":" + port);
+			} catch (Exception e) {
 				host = "localhost";
 			}
 			String username = httpProxy.getUsername();
@@ -50,9 +48,10 @@ public class HttpParam {
 				proxyAuth = null;
 			} else {
 				String password = httpProxy.getPassword();
-				proxyAuth = "Basic "
-						+ Base64.encode((username + ":" + (password == null ? ""
-								: password)).getBytes());
+				proxyAuth = "Basic " + //
+				Base64.getEncoder().encodeToString(//
+						(username + ":" + (//
+								password == null ? "" : password)).getBytes());
 			}
 		}
 	}

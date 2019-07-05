@@ -12,18 +12,40 @@ update log
 
 ## In Process
 
-har utils: add project but not link to base util pom.
+* :sparkles: add custom dns resolver.
 
 Base pom:
 
-* add profile filter file config
+* :sparkles: add profile filter file config
 
 jadeutils-base:
 
-* add Mockit example (need add to base jadelibs tool)
-* ass sigar   to monitar system status 
-* BUG: `ShellUtil`use new thread to process output steam and error steam.
+* :sparkles: add Mockit example (need add to base jadelibs tool)
+* :sparkles: add sigar   to monitar system status 
+* :bug: BUG: `ShellUtil`use new thread to process output steam and error steam.
 
+## v0.1.20-SNAPSHOT
+
+* :arrow_up: jade-java-lib version update version from 1.0.13 to 1.0.14-SNAPSHOT
+
+
+jadeutils-base:
+
+* :sparkles: text util for parse HTML to Formatted text
+* :sparkles: Base64Util V2
+
+jadeutils-web:
+
+* :sparkles: mail util receive imap pop3 by SSL 
+* :sparkles: mail util send email no SSL
+* :sparkles: mail util send email by SSL
+
+
+
+jadeutils-web:
+
+* :sparkles: mail util receive imap pop3 no SSL 
+* :sparkles: add greenmail mail serv mock
 
 ## v0.1.18
 
