@@ -27,6 +27,8 @@ jadeutils-base:
 
 ## v0.1.20-SNAPSHOT
 
+* :arrow_up: jade-java-lib version update version from 1.0.13 to 1.0.14-SNAPSHOT
+
 
 jadeutils-base:
 
