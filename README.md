@@ -24,7 +24,9 @@ jadeutils-base:
 * :sparkles: add sigar   to monitar system status 
 * :bug: BUG: `ShellUtil`use new thread to process output steam and error steam.
 
-## v1.0.21-SNAPSHOT
+jadeutils-dao:
+
+* :heavy_plus_sign: add jsr-250 java-annotation-api
 
 ## v0.1.20
 
