@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface Table {
 
-	public String database();
+	public String database() default "";
 
-	public String table();
+	public String table() default "";
 }

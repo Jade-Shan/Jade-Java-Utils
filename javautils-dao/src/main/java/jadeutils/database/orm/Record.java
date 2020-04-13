@@ -2,7 +2,7 @@ package jadeutils.database.orm;
 
 import java.util.Date;
 
-public class Record<K> {
+abstract public class Record<K> {
 
 	@Column private K id;
 	@Column private Date createTime;
