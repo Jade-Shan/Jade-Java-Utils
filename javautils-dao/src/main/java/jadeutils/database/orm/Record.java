@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Record<K> {
 
-	private K id;
-	private Date createTime;
-	private Date lastChangeTime;
+	@Column private K id;
+	@Column private Date createTime;
+	@Column private Date lastChangeTime;
 
 	public Record() {
 		super();
