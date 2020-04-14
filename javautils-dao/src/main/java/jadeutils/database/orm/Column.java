@@ -7,8 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Inherited
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target(value = ElementType.FIELD)
+@Retention(value = RetentionPolicy.RUNTIME)
 public @interface Column {
 
 	public String column() default "";
