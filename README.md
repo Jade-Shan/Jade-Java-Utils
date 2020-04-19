@@ -10,7 +10,9 @@ Java utils
 update log
 ===============
 
-## In Process
+## v2.0.1-SNAPSHOT
+
+## v2.0.0
 
 * :sparkles: add custom dns resolver.
 
@@ -28,10 +30,7 @@ jadeutils-dao:
 
 * :heavy_plus_sign: add jsr-250 java-annotation-api
 
-## v2.0.0
-
 * :arrow_up: jade-java-lib version update version from 1.0.13 to 1.0.14
-
 
 jadeutils-base:
 
