@@ -28,9 +28,9 @@ jadeutils-dao:
 
 * :heavy_plus_sign: add jsr-250 java-annotation-api
 
-## v0.1.20
+## v2.0.0
 
-* :arrow_up: jade-java-lib version update version from 1.0.13 to 1.0.14-SNAPSHOT
+* :arrow_up: jade-java-lib version update version from 1.0.13 to 1.0.14
 
 
 jadeutils-base:
