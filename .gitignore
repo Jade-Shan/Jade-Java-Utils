@@ -24,3 +24,4 @@ target/
 
 # spec for this project
 jadeutils-base/src/test/resources/tag/*.jpg
+javautils-base/images/tag/*

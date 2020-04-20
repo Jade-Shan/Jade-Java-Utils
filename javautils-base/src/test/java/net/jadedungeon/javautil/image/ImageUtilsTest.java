@@ -31,8 +31,8 @@ public class ImageUtilsTest {
 	@Before
 	public void setUp() throws Exception {
 		String base = System.getProperty("user.dir");// user.dir指定了当前的路径
-		this.imgSrc = base + "/src/test/resources/src/";
-		this.imgTag = base + "/src/test/resources/tag/";
+		this.imgSrc = base + "/images/src/";
+		this.imgTag = base + "/images/tag/";
 	}
 
 	@After
