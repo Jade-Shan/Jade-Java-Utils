@@ -1,4 +1,4 @@
-package net.jadedungeon.javautil.json;
+package net.jadedungeon.javautil.text;
 
 import java.io.IOException;
 import java.text.DateFormat;

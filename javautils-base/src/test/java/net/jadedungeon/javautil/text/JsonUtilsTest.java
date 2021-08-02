@@ -1,11 +1,12 @@
 /*
  * 
  */
-package net.jadedungeon.javautil.json;
+package net.jadedungeon.javautil.text;
 
 import java.util.ArrayList;
 
 import net.jadedungeon.javautil.reflect.User;
+import net.jadedungeon.javautil.text.JsonUtils;
 
 import org.junit.After;
 import org.junit.Before;
